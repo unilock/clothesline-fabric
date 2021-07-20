@@ -19,12 +19,12 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
         super(world, pos, yaw, profile);
     }
 
-    // FIXME: Not sure if this mixin works but it seems important
-    @Inject(
-        at = @At("TAIL"),
-        method = "onStartedTrackingBy(Lnet/minecraft/server/network/ServerPlayerEntity;)V"
-    )
-    private void onStartedTrackingBy(ServerPlayerEntity entity, CallbackInfo ci) {
-        TrackEntityCallback.START.invoker().accept((ServerPlayerEntity) (Object) this, entity);
-    }
+    // FIXME: 1.17 This doesn't work (highly important likely)
+//    @Inject(
+//        at = @At("TAIL"),
+//        method = "onStartedTrackingBy(Lnet/minecraft/server/network/ServerPlayerEntity;)V"
+//    )
+//    private void onStartedTrackingBy(ServerPlayerEntity entity, CallbackInfo ci) {
+//        TrackEntityCallback.START.invoker().accept((ServerPlayerEntity) (Object) this, entity);
+//    }
 }

@@ -54,7 +54,7 @@ public abstract class ServerWorldMixin extends World implements NetworkManagerPr
     )
     private void constructor(MinecraftServer server, Executor workerExecutor, LevelStorage.Session session, ServerWorldProperties properties, RegistryKey<World> registryKey, DimensionType dimensionType, WorldGenerationProgressListener worldGenerationProgressListener, ChunkGenerator chunkGenerator, boolean bl, long l, List<Spawner> list, boolean bl2, CallbackInfo ci) {
         PersistentStateManager persistentStateManager = ((ServerWorld) (Object) this).getPersistentStateManager();
-        persistentStateManager.getOrCreate(() -> new NetworkProviderPersistentState(PERSISTENT_STATE_KEY, networkProvider), PERSISTENT_STATE_KEY);
+        persistentStateManager.getOrCreate((nbtCompound) -> NetworkProviderPersistentState.readNbt(nbtCompound, networkProvider), () -> new NetworkProviderPersistentState(networkProvider), PERSISTENT_STATE_KEY);
     }
 
     @Override

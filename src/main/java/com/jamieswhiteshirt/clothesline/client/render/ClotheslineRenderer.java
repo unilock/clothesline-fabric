@@ -168,7 +168,8 @@ public final class ClotheslineRenderer {
 
                     matrices.push();
                     l2w.apply(matrices);
-                    client.getItemRenderer().renderItem(attachmentEntry.getValue(), ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
+//                    client.getItemRenderer().renderItem(attachmentEntry.getValue(), ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
+                    client.getItemRenderer().renderItem(attachmentEntry.getValue(), ModelTransformation.Mode.FIXED, light, 1, matrices, vertexConsumers, 0); // FIXME: Not sure on this method
                     matrices.pop();
                 }
             }
@@ -234,8 +235,8 @@ public final class ClotheslineRenderer {
         double posX = MathHelper.lerp(tickDelta, player.lastRenderX, player.getX());
         double posY = MathHelper.lerp(tickDelta, player.lastRenderY, player.getY());
         double posZ = MathHelper.lerp(tickDelta, player.lastRenderZ, player.getZ());
-        float pitch = (float) Math.toRadians(MathHelper.lerp(tickDelta, player.prevPitch, player.pitch));
-        float yaw = (float) Math.toRadians(MathHelper.lerp(tickDelta, player.prevYaw, player.yaw));
+        float pitch = (float) Math.toRadians(MathHelper.lerp(tickDelta, player.prevPitch, player.getPitch()));
+        float yaw = (float) Math.toRadians(MathHelper.lerp(tickDelta, player.prevYaw, player.getYaw()));
         int handedOffset = (player.getMainArm() == Arm.RIGHT ? 1 : -1) * (player.getActiveHand() == Hand.MAIN_HAND ? 1 : -1);
         double fovModifier = client.options.fov / 100.0D;
         Vec3d vecB = new Vec3d(posX, posY + player.getStandingEyeHeight(), posZ).add(new Vec3d(handedOffset * -0.36D * fovModifier, -0.045D * fovModifier, 0.4D).rotateX(-pitch).rotateY(-yaw));
