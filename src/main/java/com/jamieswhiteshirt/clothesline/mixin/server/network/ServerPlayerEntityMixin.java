@@ -14,15 +14,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin extends PlayerEntity {
+
     public ServerPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
         super(world, pos, yaw, profile);
     }
 
+    // FIXME: Not sure if this mixin works but it seems important
     @Inject(
         at = @At("TAIL"),
-        method = "onStartedTracking(Lnet/minecraft/entity/Entity;)V"
+        method = "onStartedTrackingBy(Lnet/minecraft/server/network/ServerPlayerEntity;)V"
     )
-    private void onStartedTracking(Entity entity, CallbackInfo ci) {
+    private void onStartedTrackingBy(ServerPlayerEntity entity, CallbackInfo ci) {
         TrackEntityCallback.START.invoker().accept((ServerPlayerEntity) (Object) this, entity);
     }
 }

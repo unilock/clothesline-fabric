@@ -50,13 +50,13 @@ public class Clothesline implements ModInitializer {
     public static CustomPayloadS2CPacket createConnectorStatePacket(@Nullable ItemUsageContext ctx, Entity entity) {
         if (ctx != null) {
             return MessageChannels.SET_CONNECTOR_STATE.createClientboundPacket(new SetConnectorStateMessage(
-                entity.getEntityId(),
+                entity.getId(),
                 ctx.getHand(),
                 new BlockHitResult(ctx.getHitPos(), ctx.getSide(), ctx.getBlockPos(), ctx.hitsInsideBlock())
             ));
         } else {
             return MessageChannels.RESET_CONNECTOR_STATE.createClientboundPacket(new ResetConnectorStateMessage(
-                entity.getEntityId()
+                entity.getId()
             ));
         }
     }

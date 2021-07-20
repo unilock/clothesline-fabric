@@ -9,6 +9,7 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
@@ -36,7 +37,7 @@ public abstract class InGameHudMixin extends DrawableHelper {
         float vScale = 1.0F / textureHeight;
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
-        bufferBuilder.begin(GL11.GL_QUADS, VertexFormats.POSITION_TEXTURE);
+        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
         bufferBuilder.vertex(matrix, x, y + regionHeight, 0.0F).texture(u * uScale, (v + regionHeight) * vScale).next();
         bufferBuilder.vertex(matrix, x + regionWidth, y + regionHeight, 0.0F).texture((u + regionWidth) * uScale, (v + regionHeight) * vScale).next();
         bufferBuilder.vertex(matrix, x + regionWidth, y, 0.0F).texture((u + regionWidth) * uScale, v * vScale).next();

@@ -1,13 +1,15 @@
+import org.w3c.dom.NodeList
+
 plugins {
-    id "fabric-loom" version "0.5.26"
+    id "fabric-loom" version "0.8.17"
     id "jacoco"
     id "com.matthewprenger.cursegradle" version "1.4.0"
     id "maven-publish"
     id "signing"
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_16
+targetCompatibility = JavaVersion.VERSION_16
 
 group = project.maven_group
 archivesBaseName = project.archives_base_name
@@ -138,4 +140,8 @@ curseforge {
     options {
         forgeGradleIntegration = false
     }
+}
+
+loom {
+    accessWidener =  file("src/main/resources/clothesline.accesswidener")
 }

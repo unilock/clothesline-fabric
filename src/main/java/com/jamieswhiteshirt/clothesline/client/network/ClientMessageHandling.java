@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 @Environment(EnvType.CLIENT)
 public class ClientMessageHandling {
     public static void init() {
+        // TODO: Migrate to ClientPlayNetworking!
         ClientSidePacketRegistry registry = ClientSidePacketRegistry.INSTANCE;
         MessageChannels.ADD_NETWORK.registerHandler(registry, new AddNetworkMessageHandler());
         MessageChannels.REMOVE_ATTACHMENT.registerHandler(registry, new RemoveAttachmentMessageHandler());

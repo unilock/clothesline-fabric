@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class BufferBuilderStorageMixin {
     @Shadow private static void assignBufferBuilder(Object2ObjectLinkedOpenHashMap<RenderLayer, BufferBuilder> builderStorage, RenderLayer layer) {}
 
+    // FIXME: Not sure if this works. I'd check
     @Inject(
         at = @At("TAIL"),
         method = "method_22999(Lit/unimi/dsi/fastutil/objects/Object2ObjectLinkedOpenHashMap;)V"
