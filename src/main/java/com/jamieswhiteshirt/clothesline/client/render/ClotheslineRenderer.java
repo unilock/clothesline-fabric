@@ -9,6 +9,7 @@ import com.jamieswhiteshirt.clothesline.common.block.ClotheslineAnchorBlock;
 import com.jamieswhiteshirt.clothesline.common.block.ClotheslineBlocks;
 import com.jamieswhiteshirt.rtree3i.RTreeMap;
 import com.jamieswhiteshirt.rtree3i.Selection;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -183,8 +184,8 @@ public final class ClotheslineRenderer {
             float x = EDGE_VERTEX_X[side];
             float y = EDGE_VERTEX_Y[side];
 
-            vertices.vertex(matrices.peek().getModel(), x, y, 0.0F).color(r, g, b, a).next();
-            vertices.vertex(matrices.peek().getModel(), x, y, (float) edge.getPathEdge().getLength() / AttachmentUnit.UNITS_PER_BLOCK).color(r, g, b, a).next();
+            vertices.vertex(matrices.peek().getModel(), x, y, 0.0F).color(r, g, b, a).normal(0,0,0).next();
+            vertices.vertex(matrices.peek().getModel(), x, y, (float) edge.getPathEdge().getLength() / AttachmentUnit.UNITS_PER_BLOCK).color(r, g, b, a).normal(0,0,0).next();
         }
         matrices.pop();
     }

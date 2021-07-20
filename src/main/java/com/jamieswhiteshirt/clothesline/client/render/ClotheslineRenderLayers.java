@@ -37,8 +37,9 @@ public class ClotheslineRenderLayers extends RenderLayer {
     private static final RenderLayer CLOTHESLINE = RenderLayer.of("clothesline", CLOTHESLINE_VERTEX_FORMAT, VertexFormat.DrawMode.QUADS, 256, RenderLayer.MultiPhaseParameters.builder()
         .texture(new RenderPhase.Texture(CLOTHESLINE_TEXTURE, false, false))
         .transparency(NO_TRANSPARENCY)
+        .shader(RenderPhase.LIGHTNING_SHADER)
         // .diffuseLighting(ENABLE_DIFFUSE_LIGHTING) // FIXME: I wanna say this is smooth lighting. Fix maybe?
-        .lightmap(ENABLE_LIGHTMAP)
+        // .lightmap(ENABLE_LIGHTMAP)
         .build(true)
     );
 
