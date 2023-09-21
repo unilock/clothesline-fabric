@@ -1,7 +1,7 @@
 {
   "required": true,
   "package": "com.jamieswhiteshirt.clothesline.mixin",
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_17",
   "mixins": [
     "entity.player.PlayerEntityMixin",
     "item.ItemAccessor",
