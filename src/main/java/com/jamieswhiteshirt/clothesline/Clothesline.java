@@ -13,7 +13,6 @@ import com.jamieswhiteshirt.clothesline.internal.ConnectorHolder;
 import com.jamieswhiteshirt.clothesline.internal.ServerWorldExtension;
 import com.jamieswhiteshirt.clothesline.internal.WorldExtension;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.Entity;
@@ -22,7 +21,6 @@ import net.minecraft.network.packet.s2c.play.CustomPayloadS2CPacket;
 import net.minecraft.util.hit.BlockHitResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import org.jetbrains.annotations.Nullable;
 
 public class Clothesline implements ModInitializer {
@@ -50,13 +48,13 @@ public class Clothesline implements ModInitializer {
     public static CustomPayloadS2CPacket createConnectorStatePacket(@Nullable ItemUsageContext ctx, Entity entity) {
         if (ctx != null) {
             return MessageChannels.SET_CONNECTOR_STATE.createClientboundPacket(new SetConnectorStateMessage(
-                entity.getEntityId(),
+                entity.getId(),
                 ctx.getHand(),
                 new BlockHitResult(ctx.getHitPos(), ctx.getSide(), ctx.getBlockPos(), ctx.hitsInsideBlock())
             ));
         } else {
             return MessageChannels.RESET_CONNECTOR_STATE.createClientboundPacket(new ResetConnectorStateMessage(
-                entity.getEntityId()
+                entity.getId()
             ));
         }
     }

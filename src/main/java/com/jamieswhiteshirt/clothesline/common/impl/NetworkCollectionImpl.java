@@ -11,8 +11,8 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-
 import org.jetbrains.annotations.Nullable;
+
 import java.util.*;
 
 public final class NetworkCollectionImpl implements NetworkCollection {

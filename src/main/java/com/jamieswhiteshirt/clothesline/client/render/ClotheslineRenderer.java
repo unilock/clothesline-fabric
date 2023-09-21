@@ -18,8 +18,6 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
-import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Arm;
@@ -43,7 +41,7 @@ public final class ClotheslineRenderer {
         this.client = client;
     }
 
-    private static VertexConsumer posNormal(VertexConsumer vertices, Vector4f pos, Vector3f normal) {
+    private static VertexConsumer posNormal(VertexConsumer vertices, Vector4f pos, Vec3f normal) {
         return vertices.vertex(pos.getX(), pos.getY(), pos.getZ()).normal(normal.getX(), normal.getY(), normal.getZ());
     }
 
@@ -52,7 +50,7 @@ public final class ClotheslineRenderer {
         float vTo = toOffset / AttachmentUnit.UNITS_PER_BLOCK;
         float length = vTo - vFrom;
 
-        Vector3f normal = new Vector3f();
+        Vec3f normal = new Vec3f();
         Vector4f pos = new Vector4f();
 
         for (int side = 0; side < 4; side++) {
@@ -67,19 +65,19 @@ public final class ClotheslineRenderer {
             float uTo = (3.0F - side) / 4.0F;
 
             normal.set(nx, ny, 0.0F);
-            normal.transform(matrices.getNormal());
+            normal.transform(matrices.getNormalMatrix());
 
             pos.set(x1, y1, 0.0F, 1.0F);
-            pos.transform(matrices.getModel());
+            pos.transform(matrices.getPositionMatrix());
             posNormal(vertices, pos, normal).texture(uFrom, vFrom).light(lightFrom).next();
             pos.set(x2, y2, 0.0F, 1.0F);
-            pos.transform(matrices.getModel());
+            pos.transform(matrices.getPositionMatrix());
             posNormal(vertices, pos, normal).texture(uTo, vFrom).light(lightFrom).next();
             pos.set(x2, y2, length, 1.0F);
-            pos.transform(matrices.getModel());
+            pos.transform(matrices.getPositionMatrix());
             posNormal(vertices, pos, normal).texture(uTo, vTo).light(lightTo).next();
             pos.set(x1, y1, length, 1.0F);
-            pos.transform(matrices.getModel());
+            pos.transform(matrices.getPositionMatrix());
             posNormal(vertices, pos, normal).texture(uFrom, vTo).light(lightTo).next();
         }
     }
@@ -104,10 +102,10 @@ public final class ClotheslineRenderer {
             matrices.push();
             matrices.translate(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
             if (state.get(ClotheslineAnchorBlock.FACE) == WallMountLocation.CEILING) {
-                matrices.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(180.0F));
+                matrices.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(180.0F));
                 crankRotation = -crankRotation;
             }
-            matrices.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(crankRotation));
+            matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(crankRotation));
 
             matrices.push();
             matrices.scale(2.0F, 2.0F, 2.0F);
@@ -170,7 +168,7 @@ public final class ClotheslineRenderer {
 
                     matrices.push();
                     l2w.apply(matrices);
-                    client.getItemRenderer().renderItem(attachmentEntry.getValue(), ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
+                    client.getItemRenderer().renderItem(attachmentEntry.getValue(), ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
                     matrices.pop();
                 }
             }
@@ -184,8 +182,8 @@ public final class ClotheslineRenderer {
             float x = EDGE_VERTEX_X[side];
             float y = EDGE_VERTEX_Y[side];
 
-            vertices.vertex(matrices.peek().getModel(), x, y, 0.0F).color(r, g, b, a).next();
-            vertices.vertex(matrices.peek().getModel(), x, y, (float) edge.getPathEdge().getLength() / AttachmentUnit.UNITS_PER_BLOCK).color(r, g, b, a).next();
+            vertices.vertex(matrices.peek().getPositionMatrix(), x, y, 0.0F).color(r, g, b, a).next();
+            vertices.vertex(matrices.peek().getPositionMatrix(), x, y, (float) edge.getPathEdge().getLength() / AttachmentUnit.UNITS_PER_BLOCK).color(r, g, b, a).next();
         }
         matrices.pop();
     }
@@ -202,7 +200,7 @@ public final class ClotheslineRenderer {
         int color = 0x20FFFFFF;
         int backgroundColor = (int)(textBackgroundOpacity * 255.0F) << 24;
         int light = 0x00F000F0;
-        textRenderer.draw(msg, x, y, color, false, matrices.peek().getModel(), vertexConsumers, false, backgroundColor, light);
+        textRenderer.draw(msg, x, y, color, false, matrices.peek().getPositionMatrix(), vertexConsumers, false, backgroundColor, light);
 
         matrices.pop();
     }
@@ -236,10 +234,10 @@ public final class ClotheslineRenderer {
         double posX = MathHelper.lerp(tickDelta, player.lastRenderX, player.getX());
         double posY = MathHelper.lerp(tickDelta, player.lastRenderY, player.getY());
         double posZ = MathHelper.lerp(tickDelta, player.lastRenderZ, player.getZ());
-        float pitch = (float) Math.toRadians(MathHelper.lerp(tickDelta, player.prevPitch, player.pitch));
-        float yaw = (float) Math.toRadians(MathHelper.lerp(tickDelta, player.prevYaw, player.yaw));
+        float pitch = (float) Math.toRadians(MathHelper.lerp(tickDelta, player.prevPitch, player.getPitch()));
+        float yaw = (float) Math.toRadians(MathHelper.lerp(tickDelta, player.prevYaw, player.getYaw()));
         int handedOffset = (player.getMainArm() == Arm.RIGHT ? 1 : -1) * (player.getActiveHand() == Hand.MAIN_HAND ? 1 : -1);
-        double fovModifier = client.options.fov / 100.0D;
+        double fovModifier = client.options.getFov().getValue() / 100.0D;
         Vec3d vecB = new Vec3d(posX, posY + player.getStandingEyeHeight(), posZ).add(new Vec3d(handedOffset * -0.36D * fovModifier, -0.045D * fovModifier, 0.4D).rotateX(-pitch).rotateY(-yaw));
 
         renderHeldClothesline(matrices, vertexConsumers, fromPos, vecB, player.world);

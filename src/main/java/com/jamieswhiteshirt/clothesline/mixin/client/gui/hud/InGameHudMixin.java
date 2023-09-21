@@ -9,6 +9,7 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,7 +18,6 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Matrix4f;
-import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -31,12 +31,12 @@ public abstract class InGameHudMixin extends DrawableHelper {
     private static final int CLOTHESLINE_ICONS_WIDTH = 32, CLOTHESLINE_ICONS_HEIGHT = 16;
 
     private static void drawTexture(MatrixStack matrices, float x, float y, float u, float v, int regionWidth, int regionHeight, int textureWidth, int textureHeight) {
-        Matrix4f matrix = matrices.peek().getModel();
+        Matrix4f matrix = matrices.peek().getPositionMatrix();
         float uScale = 1.0F / textureWidth;
         float vScale = 1.0F / textureHeight;
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
-        bufferBuilder.begin(GL11.GL_QUADS, VertexFormats.POSITION_TEXTURE);
+        bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
         bufferBuilder.vertex(matrix, x, y + regionHeight, 0.0F).texture(u * uScale, (v + regionHeight) * vScale).next();
         bufferBuilder.vertex(matrix, x + regionWidth, y + regionHeight, 0.0F).texture((u + regionWidth) * uScale, (v + regionHeight) * vScale).next();
         bufferBuilder.vertex(matrix, x + regionWidth, y, 0.0F).texture((u + regionWidth) * uScale, v * vScale).next();
@@ -56,7 +56,7 @@ public abstract class InGameHudMixin extends DrawableHelper {
             target = "Lnet/minecraft/client/gui/hud/InGameHud;drawTexture(Lnet/minecraft/client/util/math/MatrixStack;IIIIII)V",
             ordinal = 0
         ),
-        method = "renderCrosshair(Lnet/minecraft/client/util/math/MatrixStack;)V"
+        method = "renderCrosshair"
     )
     private void renderCrosshair(MatrixStack matrices, CallbackInfo ci) {
         PlayerEntity player = getCameraPlayer();

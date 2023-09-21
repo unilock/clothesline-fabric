@@ -7,9 +7,9 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.render.model.json.Transformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 
 import java.util.List;
-import java.util.Random;
 
 public class ItemModelRenderer {
     public static void renderModel(BakedModel bakedModel, ModelTransformation.Mode modelTransformationType, MatrixStack matrices, VertexConsumer vertices, int light, int overlay) {
@@ -29,7 +29,7 @@ public class ItemModelRenderer {
     }
 
     private static void renderModelColored(BakedModel bakedModel, int light, int overlay, MatrixStack matrices, VertexConsumer vertices) {
-        Random random = new Random();
+        Random random = Random.create();
         long seed = 42L;
         Direction[] directions = Direction.values();
 

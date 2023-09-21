@@ -6,7 +6,6 @@ import com.jamieswhiteshirt.clothesline.common.util.NetworkStateBuilder;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
 import org.jetbrains.annotations.Nullable;
 
 public abstract class CommonNetworkManager implements NetworkManager {

@@ -3,8 +3,8 @@ package com.jamieswhiteshirt.clothesline.api;
 import com.jamieswhiteshirt.rtree3i.RTreeMap;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-
 import org.jetbrains.annotations.Nullable;
+
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;

@@ -29,7 +29,7 @@ public class GameRendererMixin {
             value = "INVOKE",
             target = "Lnet/minecraft/util/profiler/Profiler;pop()V"
         ),
-        method = "updateTargetedEntity(F)V"
+        method = "updateTargetedEntity"
     )
     private void updateTargetedEntity(float tickDelta, CallbackInfo ci) {
         World world = client.world;

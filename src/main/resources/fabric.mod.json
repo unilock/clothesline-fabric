@@ -27,10 +27,11 @@
   "mixins": [
     "clothesline.mixins.json"
   ],
+  "accessWidener": "clothesline.accesswidener",
   "depends": {
     "fabricloader": "*",
     "fabric": "*",
-    "minecraft": "1.16.3"
+    "minecraft": ">=1.19.2"
   },
   "custom": {
     "lithium:options": {
