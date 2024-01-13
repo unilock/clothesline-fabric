@@ -27,3 +27,8 @@ jobs:
           name: Artifacts
           path: build/libs/
           if-no-files-found: error
+      - name: capture test results
+        uses: test-summary/action@2
+        with:
+          paths: build/test-results/**/*.xml
+        if: always()

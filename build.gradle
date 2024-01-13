@@ -75,6 +75,7 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 }
 
 project.ext.isReleaseVersion = !version.endsWith("-SNAPSHOT")
+build.dependsOn remapBundleJar
 
 publishing {
     publications {
