@@ -28,7 +28,7 @@ jobs:
           path: build/libs/
           if-no-files-found: error
       - name: capture test results
-        uses: test-summary/action@2
+        uses: test-summary/action@v2
         with:
           paths: build/test-results/**/*.xml
         if: always()
