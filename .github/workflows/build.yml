@@ -16,8 +16,11 @@ jobs:
           distribution: 'temurin'
       - name: make gradle wrapper executable
         run: chmod +x ./gradlew
+      - name: create run dir
+        run: |
+          mkdir run
       - name: build
-        run: ./gradlew build --stacktrace
+        run: ./gradlew build --stacktrace --info
       - name: capture build artifacts
         uses: actions/upload-artifact@v3
         with:
