@@ -5,6 +5,7 @@ import com.jamieswhiteshirt.clothesline.internal.PersistentNetwork;
 import com.jamieswhiteshirt.clothesline.common.impl.NetworkImpl;
 import com.jamieswhiteshirt.clothesline.common.util.NetworkStateBuilder;
 import net.minecraft.Bootstrap;
+import net.minecraft.SharedConstants;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Identifier;
@@ -22,6 +23,7 @@ import java.util.UUID;
 class NetworkTest {
     @BeforeAll
     static void bootstrap() {
+    	SharedConstants.createGameVersion();
         Bootstrap.initialize();
     }
 

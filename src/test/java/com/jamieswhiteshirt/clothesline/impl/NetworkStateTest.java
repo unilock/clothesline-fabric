@@ -10,6 +10,7 @@ import com.jamieswhiteshirt.clothesline.common.util.ChunkSpan;
 import com.jamieswhiteshirt.clothesline.common.util.PathBuilder;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.Bootstrap;
+import net.minecraft.SharedConstants;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import org.junit.jupiter.api.Assertions;
@@ -22,6 +23,7 @@ import java.util.Collections;
 class NetworkStateTest {
     @BeforeAll
     static void bootstrap() {
+    	SharedConstants.createGameVersion();
         Bootstrap.initialize();
     }
 
