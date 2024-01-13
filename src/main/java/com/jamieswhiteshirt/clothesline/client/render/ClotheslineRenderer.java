@@ -169,8 +169,8 @@ public final class ClotheslineRenderer {
 
                     matrices.push();
                     l2w.apply(matrices);
-//                    client.getItemRenderer().renderItem(attachmentEntry.getValue(), ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers);
-                    client.getItemRenderer().renderItem(attachmentEntry.getValue(), ModelTransformation.Mode.FIXED, light, 1, matrices, vertexConsumers, 0); // FIXME: Not sure on this method
+                    client.getItemRenderer().renderItem(attachmentEntry.getValue(), ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
+                    //client.getItemRenderer().renderItem(attachmentEntry.getValue(), ModelTransformation.Mode.FIXED, light, 1, matrices, vertexConsumers, 0); // FIXME: Not sure on this method
                     matrices.pop();
                 }
             }

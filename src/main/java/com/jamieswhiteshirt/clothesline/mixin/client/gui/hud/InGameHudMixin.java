@@ -3,11 +3,15 @@ package com.jamieswhiteshirt.clothesline.mixin.client.gui.hud;
 import com.jamieswhiteshirt.clothesline.api.client.RichBlockInteraction;
 import com.jamieswhiteshirt.clothesline.api.client.RichInteractionType;
 import com.jamieswhiteshirt.clothesline.client.ClotheslineClient;
+import com.mojang.blaze3d.systems.RenderSystem;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.BufferRenderer;
+import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.render.VertexFormats;
@@ -35,6 +39,7 @@ public abstract class InGameHudMixin extends DrawableHelper {
         Matrix4f matrix = matrices.peek().getModel();
         float uScale = 1.0F / textureWidth;
         float vScale = 1.0F / textureHeight;
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
         bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
@@ -42,7 +47,8 @@ public abstract class InGameHudMixin extends DrawableHelper {
         bufferBuilder.vertex(matrix, x + regionWidth, y + regionHeight, 0.0F).texture((u + regionWidth) * uScale, (v + regionHeight) * vScale).next();
         bufferBuilder.vertex(matrix, x + regionWidth, y, 0.0F).texture((u + regionWidth) * uScale, v * vScale).next();
         bufferBuilder.vertex(matrix, x, y, 0.0F).texture(u * uScale, v * vScale).next();
-        tessellator.draw();
+        bufferBuilder.end();
+		BufferRenderer.draw(bufferBuilder);
     }
 
     @Shadow private int scaledWidth;
@@ -76,14 +82,16 @@ public abstract class InGameHudMixin extends DrawableHelper {
 
         switch (richInteractionType) {
             case ROTATE_CLOCKWISE:
-                client.getTextureManager().bindTexture(CLOTHESLINE_GUI_ICONS);
+            	RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
+                RenderSystem.setShaderTexture(0, CLOTHESLINE_GUI_ICONS);
                 drawTexture(matrices, scaledWidth / 2.0F - 16F, scaledHeight / 2.0F - 7.5F, 0.0F, 0.0F, 15, 15, CLOTHESLINE_ICONS_WIDTH, CLOTHESLINE_ICONS_HEIGHT);
-                client.getTextureManager().bindTexture(GUI_ICONS_TEXTURE);
+                RenderSystem.setShaderTexture(0, GUI_ICONS_TEXTURE);
                 break;
             case ROTATE_COUNTER_CLOCKWISE:
-                client.getTextureManager().bindTexture(CLOTHESLINE_GUI_ICONS);
+            	RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
+            	RenderSystem.setShaderTexture(0, CLOTHESLINE_GUI_ICONS);
                 drawTexture(matrices, scaledWidth / 2.0F, scaledHeight / 2.0F - 7.5F, 16.0F, 0.0F, 15, 15, CLOTHESLINE_ICONS_WIDTH, CLOTHESLINE_ICONS_HEIGHT);
-                client.getTextureManager().bindTexture(GUI_ICONS_TEXTURE);
+                RenderSystem.setShaderTexture(0, GUI_ICONS_TEXTURE);
                 break;
         }
     }
