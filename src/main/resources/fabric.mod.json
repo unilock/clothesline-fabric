@@ -1,12 +1,14 @@
 {
   "schemaVersion": 1,
   "id": "clothesline",
-  "version": "0.3.3+1.17",
+  "version": "0.3.4+1.17",
   "name": "Clothesline",
   "description": "A seamless laundry experience that is definitely not an item transport mod.",
   "accessWidener" : "clothesline.accesswidener",
   "authors": [
-    "JamiesWhiteShirt"
+    "JamiesWhiteShirt",
+    "SebaSphere",
+    "Chocohead"
   ],
   "icon": "assets/clothesline/icon.png",
   "contact": {
