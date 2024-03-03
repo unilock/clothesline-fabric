@@ -17,7 +17,6 @@
     "client.network.ClientPlayerInteractionManagerMixin",
     "client.render.BufferBuilderStorageMixin",
     "client.render.GameRendererMixin",
-    "client.render.ShaderMixin",
     "client.render.WorldRendererMixin",
     "client.render.entity.PlayerEntityRendererMixin",
     "client.util.math.Matrix3fMixin",

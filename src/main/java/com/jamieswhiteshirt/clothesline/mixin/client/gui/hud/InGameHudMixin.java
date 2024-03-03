@@ -39,15 +39,14 @@ public abstract class InGameHudMixin extends DrawableHelper {
         float uScale = 1.0F / textureWidth;
         float vScale = 1.0F / textureHeight;
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        Tessellator tessellator = Tessellator.getInstance();
+        Tessellator tessellator = RenderSystem.renderThreadTesselator();
         BufferBuilder bufferBuilder = tessellator.getBuffer();
         bufferBuilder.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
         bufferBuilder.vertex(matrix, x, y + regionHeight, 0.0F).texture(u * uScale, (v + regionHeight) * vScale).next();
         bufferBuilder.vertex(matrix, x + regionWidth, y + regionHeight, 0.0F).texture((u + regionWidth) * uScale, (v + regionHeight) * vScale).next();
         bufferBuilder.vertex(matrix, x + regionWidth, y, 0.0F).texture((u + regionWidth) * uScale, v * vScale).next();
         bufferBuilder.vertex(matrix, x, y, 0.0F).texture(u * uScale, v * vScale).next();
-        bufferBuilder.end();
-		BufferRenderer.draw(bufferBuilder);
+		tessellator.draw();
     }
 
     @Shadow private int scaledWidth;

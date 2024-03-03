@@ -61,13 +61,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-task remapBundleJar(type: net.fabricmc.loom.task.RemapJarTask, dependsOn: bundleJar) {
-    input = bundleJar.archiveFile
-    addNestedDependencies = true
-    remapAccessWidener = true
-    archiveClassifier = "all"
-}
-
 jar {
     from("LICENSE.md") {
         rename { "${it}_${project.base.archivesName.get()}"}

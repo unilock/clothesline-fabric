@@ -4,15 +4,15 @@
   "version": "${version}",
   "name": "Clothesline",
   "description": "A seamless laundry experience that is definitely not an item transport mod.",
-  "accessWidener" : "clothesline.accesswidener",
   "authors": [
     "JamiesWhiteShirt",
     "SebaSphere",
+    "unilock",
     "Chocohead"
   ],
   "contact": {
-    "issues": "http://github.com/JamiesWhiteShirt/clothesline-fabric/issues",
-    "sources": "http://github.com/JamiesWhiteShirt/clothesline-fabric"
+    "issues": "http://github.com/Chocohead/Clothesline/issues",
+    "sources": "http://github.com/Chocohead/Clothesline"
   },
   "icon": "assets/clothesline/icon.png",
   "environment": "*",
@@ -33,7 +33,7 @@
   "accessWidener": "clothesline.accesswidener",
   "depends": {
     "fabricloader": "*",
-    "fabric": "*",
+    "fabric-api": ">=0.77",
     "minecraft": ">=1.19.2"
   },
   "custom": {
