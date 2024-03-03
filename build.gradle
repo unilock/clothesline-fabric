@@ -83,7 +83,3 @@ publishing {
         // retrieving dependencies.
     }
 }
-
-loom {
-    accessWidener =  file("src/main/resources/clothesline.accesswidener")
-}
