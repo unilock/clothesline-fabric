@@ -13,6 +13,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
 import org.jetbrains.annotations.Nullable;
+
 import java.util.*;
 
 public final class NetworkCollectionImpl implements NetworkCollection {

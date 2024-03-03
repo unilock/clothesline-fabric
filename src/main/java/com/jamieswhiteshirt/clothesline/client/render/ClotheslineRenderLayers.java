@@ -8,27 +8,16 @@ import net.minecraft.world.chunk.light.LightingProvider;
 import org.lwjgl.opengl.GL11;
 
 public class ClotheslineRenderLayers extends RenderLayer {
-
     public ClotheslineRenderLayers(String name, VertexFormat vertexFormat, VertexFormat.DrawMode drawMode, int expectedBufferSize, boolean hasCrumbling, boolean translucent, Runnable startAction, Runnable endAction) {
         super(name, vertexFormat, drawMode, expectedBufferSize, hasCrumbling, translucent, startAction, endAction);
     }
 
-    private static final ImmutableMap<String, VertexFormatElement> map = ImmutableMap.<String, VertexFormatElement>builder()
-            .put("Position", VertexFormats.POSITION_ELEMENT)
-            .put("Normal", VertexFormats.NORMAL_ELEMENT)
-            .put("UV0", VertexFormats.TEXTURE_0_ELEMENT)
-            .put("UV2", VertexFormats.LIGHT_ELEMENT)
-            .build();
-    private static final VertexFormat CLOTHESLINE_VERTEX_FORMAT =
-            new VertexFormat(map);
-    // ^ this might work ᗜˬᗜ
-    /* -- previous 1.16.5 code --
-    private static final VertexFormat CLOTHESLINE_VERTEX_FORMAT = new VertexFormat(ImmutableList.<VertexFormatElement>builder()
-            .add(VertexFormats.POSITION_ELEMENT)
-            .add(VertexFormats.NORMAL_ELEMENT)
-            .add(VertexFormats.TEXTURE_0_ELEMENT)
-            .add(VertexFormats.LIGHT_ELEMENT)
-            .build()
+    private static final VertexFormat CLOTHESLINE_VERTEX_FORMAT = new VertexFormat(ImmutableMap.<String, VertexFormatElement>builder()
+        .put("Position", VertexFormats.POSITION_ELEMENT)
+        .put("Normal", VertexFormats.NORMAL_ELEMENT)
+        .put("UV0", VertexFormats.TEXTURE_0_ELEMENT)
+        .put("UV2", VertexFormats.LIGHT_ELEMENT)
+        .build()
     );
     */
 
@@ -38,7 +27,6 @@ public class ClotheslineRenderLayers extends RenderLayer {
         .texture(new RenderPhase.Texture(CLOTHESLINE_TEXTURE, false, false))
         .shader(new Shader(ClotheslineShader::getInstance))
         .transparency(NO_TRANSPARENCY)
-        //.diffuseLighting(ENABLE_DIFFUSE_LIGHTING) // FIXME: I wanna say this is smooth lighting. Fix maybe?
         .lightmap(ENABLE_LIGHTMAP)
         .build(true)
     );

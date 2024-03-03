@@ -25,6 +25,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -32,8 +33,8 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
 import org.jetbrains.annotations.Nullable;
+
 import java.util.List;
-import java.util.Random;
 
 public class ClotheslineAnchorBlock extends WallMountedBlock implements InventoryProvider, Waterloggable {
     /**
@@ -201,7 +202,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (state.get(WATERLOGGED)) {
-            world.getFluidTickScheduler().schedule(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+            world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
 
         return super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);

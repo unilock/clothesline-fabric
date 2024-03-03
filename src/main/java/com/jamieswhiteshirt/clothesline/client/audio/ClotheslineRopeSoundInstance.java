@@ -8,6 +8,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.sound.AbstractSoundInstance;
 import net.minecraft.client.sound.TickableSoundInstance;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.util.math.random.Random;
 
 @Environment(EnvType.CLIENT)
 public class ClotheslineRopeSoundInstance extends AbstractSoundInstance implements TickableSoundInstance {
@@ -15,7 +16,7 @@ public class ClotheslineRopeSoundInstance extends AbstractSoundInstance implemen
     private final Path.Node node;
 
     public ClotheslineRopeSoundInstance(NetworkState state, Path.Node node) {
-        super(ClotheslineSoundEvents.BLOCK_CLOTHESLINE_ANCHOR_ROPE, SoundCategory.BLOCKS);
+        super(ClotheslineSoundEvents.BLOCK_CLOTHESLINE_ANCHOR_ROPE, SoundCategory.BLOCKS, Random.create());
         this.state = state;
         this.node = node;
 

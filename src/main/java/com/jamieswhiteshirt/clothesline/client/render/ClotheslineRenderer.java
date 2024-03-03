@@ -66,19 +66,19 @@ public final class ClotheslineRenderer {
             float uTo = (3.0F - side) / 4.0F;
 
             normal.set(nx, ny, 0.0F);
-            normal.transform(matrices.getNormal());
+            normal.transform(matrices.getNormalMatrix());
 
             pos.set(x1, y1, 0.0F, 1.0F);
-            pos.transform(matrices.getModel());
+            pos.transform(matrices.getPositionMatrix());
             posNormal(vertices, pos, normal).texture(uFrom, vFrom).light(lightFrom).next();
             pos.set(x2, y2, 0.0F, 1.0F);
-            pos.transform(matrices.getModel());
+            pos.transform(matrices.getPositionMatrix());
             posNormal(vertices, pos, normal).texture(uTo, vFrom).light(lightFrom).next();
             pos.set(x2, y2, length, 1.0F);
-            pos.transform(matrices.getModel());
+            pos.transform(matrices.getPositionMatrix());
             posNormal(vertices, pos, normal).texture(uTo, vTo).light(lightTo).next();
             pos.set(x1, y1, length, 1.0F);
-            pos.transform(matrices.getModel());
+            pos.transform(matrices.getPositionMatrix());
             posNormal(vertices, pos, normal).texture(uFrom, vTo).light(lightTo).next();
         }
     }
@@ -170,7 +170,6 @@ public final class ClotheslineRenderer {
                     matrices.push();
                     l2w.apply(matrices);
                     client.getItemRenderer().renderItem(attachmentEntry.getValue(), ModelTransformation.Mode.FIXED, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, 0);
-                    //client.getItemRenderer().renderItem(attachmentEntry.getValue(), ModelTransformation.Mode.FIXED, light, 1, matrices, vertexConsumers, 0); // FIXME: Not sure on this method
                     matrices.pop();
                 }
             }
@@ -184,8 +183,8 @@ public final class ClotheslineRenderer {
             float x = EDGE_VERTEX_X[side];
             float y = EDGE_VERTEX_Y[side];
 
-            vertices.vertex(matrices.peek().getModel(), x, y, 0.0F).color(r, g, b, a).normal(0,0,0).next();
-            vertices.vertex(matrices.peek().getModel(), x, y, (float) edge.getPathEdge().getLength() / AttachmentUnit.UNITS_PER_BLOCK).color(r, g, b, a).normal(0,0,0).next();
+            vertices.vertex(matrices.peek().getPositionMatrix(), x, y, 0.0F).color(r, g, b, a).next();
+            vertices.vertex(matrices.peek().getPositionMatrix(), x, y, (float) edge.getPathEdge().getLength() / AttachmentUnit.UNITS_PER_BLOCK).color(r, g, b, a).next();
         }
         matrices.pop();
     }
@@ -202,7 +201,7 @@ public final class ClotheslineRenderer {
         int color = 0x20FFFFFF;
         int backgroundColor = (int)(textBackgroundOpacity * 255.0F) << 24;
         int light = 0x00F000F0;
-        textRenderer.draw(msg, x, y, color, false, matrices.peek().getModel(), vertexConsumers, false, backgroundColor, light);
+        textRenderer.draw(msg, x, y, color, false, matrices.peek().getPositionMatrix(), vertexConsumers, false, backgroundColor, light);
 
         matrices.pop();
     }
@@ -239,7 +238,7 @@ public final class ClotheslineRenderer {
         float pitch = (float) Math.toRadians(MathHelper.lerp(tickDelta, player.prevPitch, player.getPitch()));
         float yaw = (float) Math.toRadians(MathHelper.lerp(tickDelta, player.prevYaw, player.getYaw()));
         int handedOffset = (player.getMainArm() == Arm.RIGHT ? 1 : -1) * (player.getActiveHand() == Hand.MAIN_HAND ? 1 : -1);
-        double fovModifier = client.options.fov / 100.0D;
+        double fovModifier = client.options.getFov().getValue() / 100.0D;
         Vec3d vecB = new Vec3d(posX, posY + player.getStandingEyeHeight(), posZ).add(new Vec3d(handedOffset * -0.36D * fovModifier, -0.045D * fovModifier, 0.4D).rotateX(-pitch).rotateY(-yaw));
 
         renderHeldClothesline(matrices, vertexConsumers, fromPos, vecB, player.world);

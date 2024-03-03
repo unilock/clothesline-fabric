@@ -13,7 +13,6 @@ import com.jamieswhiteshirt.clothesline.internal.ConnectorHolder;
 import com.jamieswhiteshirt.clothesline.internal.ServerWorldExtension;
 import com.jamieswhiteshirt.clothesline.internal.WorldExtension;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.Entity;

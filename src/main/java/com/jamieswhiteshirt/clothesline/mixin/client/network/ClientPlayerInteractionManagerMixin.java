@@ -23,7 +23,7 @@ public class ClientPlayerInteractionManagerMixin {
             value = "INVOKE",
             target = "Lnet/minecraft/client/network/ClientPlayNetworkHandler;sendPacket(Lnet/minecraft/network/Packet;)V"
         ),
-        method = "stopUsingItem(Lnet/minecraft/entity/player/PlayerEntity;)V",
+        method = "stopUsingItem",
         cancellable = true
     )
     private void stopUsingItem(PlayerEntity var1, CallbackInfo info) {

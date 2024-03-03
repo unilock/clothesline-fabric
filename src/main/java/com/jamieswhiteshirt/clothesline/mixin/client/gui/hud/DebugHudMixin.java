@@ -26,7 +26,7 @@ public class DebugHudMixin extends DrawableHelper {
 
     @Inject(
         at = @At("RETURN"),
-        method = "getRightText()Ljava/util/List;"
+        method = "getRightText"
     )
     private void getRightText(CallbackInfoReturnable<List<String>> cir) {
         if (!client.hasReducedDebugInfo()) {

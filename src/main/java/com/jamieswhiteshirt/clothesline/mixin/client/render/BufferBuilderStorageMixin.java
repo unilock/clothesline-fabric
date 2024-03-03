@@ -18,7 +18,7 @@ public abstract class BufferBuilderStorageMixin {
     // FIXME: Not sure if this works. I'd check
     @Inject(
         at = @At("TAIL"),
-        method = "method_22999(Lit/unimi/dsi/fastutil/objects/Object2ObjectLinkedOpenHashMap;)V"
+        method = "method_22999"
     )
     private void method_22999(Object2ObjectLinkedOpenHashMap<RenderLayer, BufferBuilder> layerBuffers, CallbackInfo ci) {
         assignBufferBuilder(layerBuffers, ClotheslineRenderLayers.getClothesline());

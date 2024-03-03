@@ -25,7 +25,7 @@ public final class Transformation {
     }
 
     public void apply(MatrixStack matrices) {
-        matrices.peek().getModel().multiply(model);
-        matrices.peek().getNormal().multiply(normal);
+        matrices.peek().getPositionMatrix().multiply(model);
+        matrices.peek().getNormalMatrix().multiply(normal);
     }
 }

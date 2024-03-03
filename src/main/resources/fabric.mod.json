@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "clothesline",
-  "version": "0.3.4+1.17",
+  "version": "${version}",
   "name": "Clothesline",
   "description": "A seamless laundry experience that is definitely not an item transport mod.",
   "accessWidener" : "clothesline.accesswidener",
@@ -10,11 +10,12 @@
     "SebaSphere",
     "Chocohead"
   ],
-  "icon": "assets/clothesline/icon.png",
   "contact": {
     "issues": "http://github.com/JamiesWhiteShirt/clothesline-fabric/issues",
     "sources": "http://github.com/JamiesWhiteShirt/clothesline-fabric"
   },
+  "icon": "assets/clothesline/icon.png",
+  "environment": "*",
   "entrypoints": {
     "main": [
       "com.jamieswhiteshirt.clothesline.Clothesline"
@@ -26,14 +27,15 @@
       "com.jamieswhiteshirt.clothesline.client.RichInteractions"
     ]
   },
-  "depends": {
-    "fabricloader": ">=0.4.1",
-    "fabric": ">=0.14.0",
-    "rtree-3i-lite-fabric": ">=0.3.0"
-  },
   "mixins": [
     "clothesline.mixins.json"
   ],
+  "accessWidener": "clothesline.accesswidener",
+  "depends": {
+    "fabricloader": "*",
+    "fabric": "*",
+    "minecraft": ">=1.19.2"
+  },
   "custom": {
     "lithium:options": {
       "mixin.world.player_chunk_tick": false

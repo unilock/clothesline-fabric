@@ -13,11 +13,6 @@ import java.util.stream.Collectors;
 public class NetworkProviderPersistentState extends PersistentState {
     private final NetworkProvider provider;
 
-//    public NetworkProviderPersistentState(String key, NetworkProvider provider) {
-//        super(key);
-//        this.provider = provider;
-//    }
-
     public NetworkProviderPersistentState(NetworkProvider provider) {
         this.provider = provider;
     }
@@ -27,16 +22,14 @@ public class NetworkProviderPersistentState extends PersistentState {
         return true;
     }
 
-    public static NetworkProviderPersistentState readNbt(NbtCompound tag, NetworkProvider provider) {
-        NetworkProviderPersistentState data = new NetworkProviderPersistentState(provider);
-        try {
-            int version;
-            if (!tag.contains("Version", NbtType.INT)) {
-                Clothesline.LOGGER.warn("Invalid save data. Expected a Version, found no Version. Assuming Version 0.");
-                version = 0;
-            } else {
-                version = tag.getInt("Version");
-            }
+    public void fromNbt(NbtCompound tag) {
+        int version;
+        if (!tag.contains("Version", NbtType.INT)) {
+            Clothesline.LOGGER.warn("Invalid save data. Expected a Version, found no Version. Assuming Version 0.");
+            version = 0;
+        } else {
+            version = tag.getInt("Version");
+        }
 
             if (version != 0) {
                 Clothesline.LOGGER.error("Invalid save data. Expected Version <= 0, found " + version + ". Discarding save data.");
