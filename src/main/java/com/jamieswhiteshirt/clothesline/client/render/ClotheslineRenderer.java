@@ -85,19 +85,19 @@ public final class ClotheslineRenderer {
             float uTo = (3.0F - side) / 4.0F;
 
             normal.set(nx, ny, 0.0F);
-            matrices.getNormalMatrix().invert().transform(normal);
+            matrices.getNormalMatrix().transform(normal);
 
             pos.set(x1, y1, 0.0F, 1.0F);
-            matrices.getPositionMatrix().invert().transform(pos);
+            matrices.getPositionMatrix().transform(pos);
             posNormal(vertices, pos, normal).texture(uFrom, vFrom).light(lightFrom).next();
             pos.set(x2, y2, 0.0F, 1.0F);
-            matrices.getPositionMatrix().invert().transform(pos);
+            matrices.getPositionMatrix().transform(pos);
             posNormal(vertices, pos, normal).texture(uTo, vFrom).light(lightFrom).next();
             pos.set(x2, y2, length, 1.0F);
-            matrices.getPositionMatrix().invert().transform(pos);
+            matrices.getPositionMatrix().transform(pos);
             posNormal(vertices, pos, normal).texture(uTo, vTo).light(lightTo).next();
             pos.set(x1, y1, length, 1.0F);
-            matrices.getPositionMatrix().invert().transform(pos);
+            matrices.getPositionMatrix().transform(pos);
             posNormal(vertices, pos, normal).texture(uFrom, vTo).light(lightTo).next();
         }
     }
@@ -182,7 +182,7 @@ public final class ClotheslineRenderer {
 
                     // Create world position of attachment for lighting calculation
                     wPos.set(0.0F, 0.0F, 0.0F, 1.0F);
-                    l2w.getModel().invert().transform(wPos);
+                    l2w.getModel().transform(wPos);
                     BlockPos pos = new BlockPos((int) wPos.x, (int) wPos.y, (int) wPos.z);
                     int light = WorldRenderer.getLightmapCoordinates(world, pos);
 
