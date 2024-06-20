@@ -101,7 +101,7 @@ public final class EdgeAttachmentTransformations {
         float swingAngle = calculateSwingAngle(momentum, offset);
 
         Quaternionf rotation = RotationAxis.POSITIVE_Y.rotationDegrees(-angleY);
-        rotation.mul(new Quaternionf().rotationX(swingAngle));
+        rotation.mul(RotationAxis.POSITIVE_X.rotationDegrees(swingAngle));
 
         Matrix4f model = new Matrix4f().translation((float) pos.x, (float) pos.y, (float) pos.z);
         model.scale(0.5F, 0.5F, 0.5F);
@@ -116,7 +116,7 @@ public final class EdgeAttachmentTransformations {
         float swingAngle = calculateSwingAngle(momentum, offset);
 
         Quaternionf rotation = RotationAxis.POSITIVE_X.rotationDegrees(-swingAngle);
-        rotation.mul(new Quaternionf().rotationY(angleY));
+        rotation.mul(RotationAxis.POSITIVE_Y.rotationDegrees(angleY));
 
         Matrix4f model = new Matrix4f().translation(0.0F, 0.5F, 0.0F);
         model.mul(new Matrix4f().set(rotation));
@@ -131,7 +131,7 @@ public final class EdgeAttachmentTransformations {
         float swingAngle = calculateSwingAngle(momentum, offset);
 
         Quaternionf rotation = RotationAxis.POSITIVE_Y.rotationDegrees(-angleY);
-        rotation.mul(new Quaternionf().rotationX(swingAngle));
+        rotation.mul(RotationAxis.POSITIVE_X.rotationDegrees(swingAngle));
 
         Matrix4f model = new Matrix4f().translation((float) pos.x, (float) pos.y, (float) pos.z);
         model.mul(new Matrix4f().scale(0.5F, 0.5F, 0.5F));
