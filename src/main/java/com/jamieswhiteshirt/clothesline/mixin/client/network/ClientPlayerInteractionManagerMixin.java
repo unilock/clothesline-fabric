@@ -21,7 +21,7 @@ public class ClientPlayerInteractionManagerMixin {
     @Inject(
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/client/network/ClientPlayNetworkHandler;sendPacket(Lnet/minecraft/network/Packet;)V"
+            target = "Lnet/minecraft/client/network/ClientPlayNetworkHandler;sendPacket(Lnet/minecraft/network/packet/Packet;)V"
         ),
         method = "stopUsingItem",
         cancellable = true
@@ -31,7 +31,7 @@ public class ClientPlayerInteractionManagerMixin {
         ClientWorld world = MinecraftClient.getInstance().world;
         if (hitResult != null && world != null && hitResult.getType() == HitResult.Type.BLOCK) {
             ClientPlayerEntity player = MinecraftClient.getInstance().player;
-            if (player != null && player.getActiveItem().getItem() instanceof ConnectorItem) {
+            if (player != null && player.getActiveItem().getItem() instanceof ConnectorItem itemConnector) {
                 // This is a connector item, we must therefore tell the server which block position where the connection
                 // will end.
                 MinecraftClient.getInstance().getNetworkHandler().sendPacket(
@@ -41,7 +41,6 @@ public class ClientPlayerInteractionManagerMixin {
                     ))
                 );
 
-                ConnectorItem itemConnector = (ConnectorItem) player.getActiveItem().getItem();
                 itemConnector.stopActiveHandWithTo(player, new ItemUsageContext(
                     player,
                     player.getActiveHand(),

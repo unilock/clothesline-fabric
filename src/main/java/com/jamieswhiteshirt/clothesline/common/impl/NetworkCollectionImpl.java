@@ -2,7 +2,13 @@ package com.jamieswhiteshirt.clothesline.common.impl;
 
 import com.google.common.collect.MultimapBuilder;
 import com.google.common.collect.SetMultimap;
-import com.jamieswhiteshirt.clothesline.api.*;
+import com.jamieswhiteshirt.clothesline.api.Line;
+import com.jamieswhiteshirt.clothesline.api.Network;
+import com.jamieswhiteshirt.clothesline.api.NetworkCollection;
+import com.jamieswhiteshirt.clothesline.api.NetworkCollectionListener;
+import com.jamieswhiteshirt.clothesline.api.NetworkEdge;
+import com.jamieswhiteshirt.clothesline.api.NetworkNode;
+import com.jamieswhiteshirt.clothesline.api.Path;
 import com.jamieswhiteshirt.rtree3i.Box;
 import com.jamieswhiteshirt.rtree3i.Configuration;
 import com.jamieswhiteshirt.rtree3i.ConfigurationBuilder;
@@ -13,7 +19,13 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.UUID;
 
 public final class NetworkCollectionImpl implements NetworkCollection {
     private static final Configuration configuration = new ConfigurationBuilder().star().build();

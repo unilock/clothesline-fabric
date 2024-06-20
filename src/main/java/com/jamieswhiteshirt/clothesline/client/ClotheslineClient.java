@@ -14,8 +14,9 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 @Environment(EnvType.CLIENT)
 public class ClotheslineClient implements ClientModInitializer {
@@ -34,6 +35,6 @@ public class ClotheslineClient implements ClientModInitializer {
             .getEntrypoints("clothesline:rich_interaction", RichInteractionRegistry.Consumer.class)
             .forEach(consumer -> consumer.accept(richInteractionRegistry));
 
-        Registry.register(Registry.ENTITY_TYPE, new Identifier("clothesline", "network_raycast_hit"), NetworkRaycastHitEntity.ENTITY_TYPE);
+        Registry.register(Registries.ENTITY_TYPE, new Identifier("clothesline", "network_raycast_hit"), NetworkRaycastHitEntity.ENTITY_TYPE);
     }
 }

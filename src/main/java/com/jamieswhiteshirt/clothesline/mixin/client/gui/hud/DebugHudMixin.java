@@ -1,10 +1,13 @@
 package com.jamieswhiteshirt.clothesline.mixin.client.gui.hud;
 
-import com.jamieswhiteshirt.clothesline.api.*;
+import com.jamieswhiteshirt.clothesline.api.Network;
+import com.jamieswhiteshirt.clothesline.api.NetworkEdge;
+import com.jamieswhiteshirt.clothesline.api.NetworkManager;
+import com.jamieswhiteshirt.clothesline.api.NetworkManagerProvider;
+import com.jamieswhiteshirt.clothesline.api.NetworkNode;
 import com.jamieswhiteshirt.clothesline.client.raycast.NetworkRaycastHit;
 import com.jamieswhiteshirt.clothesline.client.raycast.NetworkRaycastHitEntity;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.DebugHud;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.hit.BlockHitResult;
@@ -20,7 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Mixin(DebugHud.class)
-public class DebugHudMixin extends DrawableHelper {
+public class DebugHudMixin {
     @Shadow @Final private MinecraftClient client;
     @Shadow private HitResult blockHit;
 

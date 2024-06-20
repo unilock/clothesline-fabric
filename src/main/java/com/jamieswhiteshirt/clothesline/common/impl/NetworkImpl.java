@@ -56,7 +56,7 @@ public final class NetworkImpl implements Network {
         if (!stack.isEmpty()) {
             if (state.getAttachment(attachmentKey).isEmpty()) {
                 player.setStackInHand(hand, insertItem(attachmentKey, stack, false));
-                return ActionResult.success(player.world.isClient);
+                return ActionResult.success(player.getWorld().isClient);
             }
         }
         return ActionResult.PASS;
@@ -67,7 +67,7 @@ public final class NetworkImpl implements Network {
         ItemStack stack = state.getAttachment(attachmentKey);
         if (!stack.isEmpty()) {
             setAttachment(attachmentKey, ItemStack.EMPTY);
-            World world = player.world;
+            World world = player.getWorld();
             if (!world.isClient && world.getGameRules().getBoolean(GameRules.DO_TILE_DROPS)) {
                 Vec3d pos = state.getPath().getPositionForOffset(state.attachmentKeyToOffset(attachmentKey));
                 ItemEntity itemEntity = new ItemEntity(world, pos.x, pos.y - 0.5D, pos.z, stack);

@@ -3,6 +3,7 @@ package com.jamieswhiteshirt.clothesline;
 import com.jamieswhiteshirt.clothesline.common.block.ClotheslineBlocks;
 import com.jamieswhiteshirt.clothesline.common.event.ChunkWatchCallback;
 import com.jamieswhiteshirt.clothesline.common.event.TrackEntityCallback;
+import com.jamieswhiteshirt.clothesline.common.item.ClotheslineItemGroups;
 import com.jamieswhiteshirt.clothesline.common.item.ClotheslineItems;
 import com.jamieswhiteshirt.clothesline.common.network.MessageChannels;
 import com.jamieswhiteshirt.clothesline.common.network.ServerMessageHandling;
@@ -30,6 +31,7 @@ public class Clothesline implements ModInitializer {
     public void onInitialize() {
         ClotheslineBlocks.init();
         ClotheslineItems.init();
+        ClotheslineItemGroups.init();
         ClotheslineSoundEvents.init();
         ServerMessageHandling.init();
 

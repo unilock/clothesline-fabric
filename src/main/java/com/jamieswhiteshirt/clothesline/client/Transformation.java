@@ -3,8 +3,8 @@ package com.jamieswhiteshirt.clothesline.client;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Matrix3f;
-import net.minecraft.util.math.Matrix4f;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 
 @Environment(EnvType.CLIENT)
 public final class Transformation {
@@ -25,7 +25,7 @@ public final class Transformation {
     }
 
     public void apply(MatrixStack matrices) {
-        matrices.peek().getPositionMatrix().multiply(model);
-        matrices.peek().getNormalMatrix().multiply(normal);
+        matrices.peek().getPositionMatrix().mul(model);
+        matrices.peek().getNormalMatrix().mul(normal);
     }
 }

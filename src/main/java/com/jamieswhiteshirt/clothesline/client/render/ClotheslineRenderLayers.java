@@ -1,7 +1,11 @@
 package com.jamieswhiteshirt.clothesline.client.render;
 
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.client.render.*;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.RenderPhase;
+import net.minecraft.client.render.VertexFormat;
+import net.minecraft.client.render.VertexFormatElement;
+import net.minecraft.client.render.VertexFormats;
 import net.minecraft.util.Identifier;
 
 public class ClotheslineRenderLayers extends RenderLayer {
@@ -20,7 +24,7 @@ public class ClotheslineRenderLayers extends RenderLayer {
     private static final Identifier CLOTHESLINE_TEXTURE = new Identifier("clothesline", "textures/misc/clothesline.png");
     // TODO: What is a reasonable default buffer size?
     private static final RenderLayer CLOTHESLINE = RenderLayer.of("clothesline", CLOTHESLINE_VERTEX_FORMAT, VertexFormat.DrawMode.QUADS, 256, RenderLayer.MultiPhaseParameters.builder()
-        .shader(RenderPhase.POSITION_TEXTURE_SHADER)
+        .program(RenderPhase.POSITION_TEXTURE_PROGRAM)
         .texture(new RenderPhase.Texture(CLOTHESLINE_TEXTURE, false, false))
         .transparency(NO_TRANSPARENCY)
         .lightmap(ENABLE_LIGHTMAP)

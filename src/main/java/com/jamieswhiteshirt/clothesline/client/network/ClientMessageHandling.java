@@ -1,6 +1,12 @@
 package com.jamieswhiteshirt.clothesline.client.network;
 
-import com.jamieswhiteshirt.clothesline.client.network.messagehandler.*;
+import com.jamieswhiteshirt.clothesline.client.network.messagehandler.AddNetworkMessageHandler;
+import com.jamieswhiteshirt.clothesline.client.network.messagehandler.RemoveAttachmentMessageHandler;
+import com.jamieswhiteshirt.clothesline.client.network.messagehandler.RemoveNetworkMessageHandler;
+import com.jamieswhiteshirt.clothesline.client.network.messagehandler.ResetConnectorStateMessageHandler;
+import com.jamieswhiteshirt.clothesline.client.network.messagehandler.SetAttachmentMessageHandler;
+import com.jamieswhiteshirt.clothesline.client.network.messagehandler.SetConnectorStateMessageHandler;
+import com.jamieswhiteshirt.clothesline.client.network.messagehandler.UpdateNetworkMessageHandler;
 import com.jamieswhiteshirt.clothesline.common.network.MessageChannels;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

@@ -1,6 +1,10 @@
 package com.jamieswhiteshirt.clothesline.client;
 
-import com.jamieswhiteshirt.clothesline.api.*;
+import com.jamieswhiteshirt.clothesline.api.Network;
+import com.jamieswhiteshirt.clothesline.api.NetworkCollection;
+import com.jamieswhiteshirt.clothesline.api.NetworkCollectionListener;
+import com.jamieswhiteshirt.clothesline.api.NetworkState;
+import com.jamieswhiteshirt.clothesline.api.Path;
 import com.jamieswhiteshirt.clothesline.client.audio.ClotheslineRopeSoundInstance;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

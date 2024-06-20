@@ -1,6 +1,16 @@
 package com.jamieswhiteshirt.clothesline.common.network;
 
-import com.jamieswhiteshirt.clothesline.common.network.message.*;
+import com.jamieswhiteshirt.clothesline.common.network.message.AddNetworkMessage;
+import com.jamieswhiteshirt.clothesline.common.network.message.HitAttachmentMessage;
+import com.jamieswhiteshirt.clothesline.common.network.message.HitNetworkMessage;
+import com.jamieswhiteshirt.clothesline.common.network.message.RemoveAttachmentMessage;
+import com.jamieswhiteshirt.clothesline.common.network.message.RemoveNetworkMessage;
+import com.jamieswhiteshirt.clothesline.common.network.message.ResetConnectorStateMessage;
+import com.jamieswhiteshirt.clothesline.common.network.message.SetAttachmentMessage;
+import com.jamieswhiteshirt.clothesline.common.network.message.SetConnectorStateMessage;
+import com.jamieswhiteshirt.clothesline.common.network.message.StopUsingItemOnMessage;
+import com.jamieswhiteshirt.clothesline.common.network.message.TryUseItemOnNetworkMessage;
+import com.jamieswhiteshirt.clothesline.common.network.message.UpdateNetworkMessage;
 import net.minecraft.util.Identifier;
 
 public class MessageChannels {

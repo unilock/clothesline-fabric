@@ -5,7 +5,13 @@ import com.jamieswhiteshirt.clothesline.api.NetworkEdge;
 import com.jamieswhiteshirt.clothesline.api.Path;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RotationAxis;
+import net.minecraft.util.math.Vec3d;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
+import org.joml.Quaternionf;
 
 import java.util.List;
 
@@ -94,13 +100,13 @@ public final class EdgeAttachmentTransformations {
         Vec3d pos = projection.projectRUF(EDGE_X, EDGE_Y, relativeOffset / AttachmentUnit.UNITS_PER_BLOCK);
         float swingAngle = calculateSwingAngle(momentum, offset);
 
-        Quaternion rotation = Vec3f.POSITIVE_Y.getDegreesQuaternion(-angleY);
-        rotation.hamiltonProduct(Vec3f.POSITIVE_X.getDegreesQuaternion(swingAngle));
+        Quaternionf rotation = RotationAxis.POSITIVE_Y.rotationDegrees(-angleY);
+        rotation.mul(new Quaternionf().rotationX(swingAngle));
 
-        Matrix4f model = Matrix4f.translate((float) pos.x, (float) pos.y, (float) pos.z);
-        model.multiply(Matrix4f.scale(0.5F, 0.5F, 0.5F));
-        model.multiply(rotation);
-        model.multiply(Matrix4f.translate(0.0F, -0.5F, 0.0F));
+        Matrix4f model = new Matrix4f().translation((float) pos.x, (float) pos.y, (float) pos.z);
+        model.scale(0.5F, 0.5F, 0.5F);
+        model.mul(new Matrix4f().set(rotation));
+        model.mul(new Matrix4f().translation(0.0F, -0.5F, 0.0F));
         return model;
     }
 
@@ -109,13 +115,13 @@ public final class EdgeAttachmentTransformations {
         Vec3d pos = projection.projectRUF(EDGE_X, EDGE_Y, relativeOffset / AttachmentUnit.UNITS_PER_BLOCK);
         float swingAngle = calculateSwingAngle(momentum, offset);
 
-        Quaternion rotation = Vec3f.POSITIVE_X.getDegreesQuaternion(-swingAngle);
-        rotation.hamiltonProduct(Vec3f.POSITIVE_Y.getDegreesQuaternion(angleY));
+        Quaternionf rotation = RotationAxis.POSITIVE_X.rotationDegrees(-swingAngle);
+        rotation.mul(new Quaternionf().rotationY(angleY));
 
-        Matrix4f model = Matrix4f.translate(0.0F, 0.5F, 0.0F);
-        model.multiply(rotation);
-        model.multiply(Matrix4f.scale(2.0F, 2.0F, 2.0F));
-        model.multiply(Matrix4f.translate((float) -pos.x, (float) -pos.y, (float) -pos.z));
+        Matrix4f model = new Matrix4f().translation(0.0F, 0.5F, 0.0F);
+        model.mul(new Matrix4f().set(rotation));
+        model.mul(new Matrix4f().scale(2.0F, 2.0F, 2.0F));
+        model.mul(new Matrix4f().translation((float) -pos.x, (float) -pos.y, (float) -pos.z));
         return model;
     }
 
@@ -124,14 +130,14 @@ public final class EdgeAttachmentTransformations {
         Vec3d pos = projection.projectRUF(EDGE_X, EDGE_Y, relativeOffset / AttachmentUnit.UNITS_PER_BLOCK);
         float swingAngle = calculateSwingAngle(momentum, offset);
 
-        Quaternion rotation = Vec3f.POSITIVE_Y.getDegreesQuaternion(-angleY);
-        rotation.hamiltonProduct(Vec3f.POSITIVE_X.getDegreesQuaternion(swingAngle));
+        Quaternionf rotation = RotationAxis.POSITIVE_Y.rotationDegrees(-angleY);
+        rotation.mul(new Quaternionf().rotationX(swingAngle));
 
-        Matrix4f model = Matrix4f.translate((float) pos.x, (float) pos.y, (float) pos.z);
-        model.multiply(Matrix4f.scale(0.5F, 0.5F, 0.5F));
-        model.multiply(rotation);
-        model.multiply(Matrix4f.translate(0.0F, -0.5F, 0.0F));
-        Matrix3f normal = new Matrix3f(rotation);
+        Matrix4f model = new Matrix4f().translation((float) pos.x, (float) pos.y, (float) pos.z);
+        model.mul(new Matrix4f().scale(0.5F, 0.5F, 0.5F));
+        model.mul(new Matrix4f().set(rotation));
+        model.mul(new Matrix4f().translation(0.0F, -0.5F, 0.0F));
+        Matrix3f normal = new Matrix3f().set(rotation);
         return new Transformation(model, normal);
     }
 
@@ -140,14 +146,14 @@ public final class EdgeAttachmentTransformations {
         Vec3d pos = projection.projectRUF(EDGE_X, EDGE_Y, relativeOffset / AttachmentUnit.UNITS_PER_BLOCK);
         float swingAngle = calculateSwingAngle(momentum, offset);
 
-        Quaternion rotation = Vec3f.POSITIVE_X.getDegreesQuaternion(-swingAngle);
-        rotation.hamiltonProduct(Vec3f.POSITIVE_Y.getDegreesQuaternion(angleY));
+        Quaternionf rotation = RotationAxis.POSITIVE_X.rotationDegrees(-swingAngle);
+        rotation.mul(new Quaternionf().rotationY(angleY));
 
-        Matrix4f model = Matrix4f.translate(0.0F, 0.5F, 0.0F);
-        model.multiply(rotation);
-        model.multiply(Matrix4f.scale(2.0F, 2.0F, 2.0F));
-        model.multiply(Matrix4f.translate((float) -pos.x, (float) -pos.y, (float) -pos.z));
-        Matrix3f normal = new Matrix3f(rotation);
+        Matrix4f model = new Matrix4f().translation(0.0F, 0.5F, 0.0F);
+        model.mul(new Matrix4f().set(rotation));
+        model.mul(new Matrix4f().scale(2.0F, 2.0F, 2.0F));
+        model.mul(new Matrix4f().translation((float) -pos.x, (float) -pos.y, (float) -pos.z));
+        Matrix3f normal = new Matrix3f().set(rotation);
         return new Transformation(model, normal);
     }
 }

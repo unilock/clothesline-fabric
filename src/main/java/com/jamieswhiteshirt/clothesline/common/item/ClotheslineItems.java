@@ -8,21 +8,21 @@ import com.jamieswhiteshirt.clothesline.common.block.ClotheslineBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 
 public class ClotheslineItems {
-    public static final Item CLOTHESLINE_ANCHOR = registerBlock(ClotheslineBlocks.CLOTHESLINE_ANCHOR, ClotheslineItemGroups.ITEMS);
-    public static final Item CLOTHESLINE = register("clothesline", new ConnectorItem(new Item.Settings().group(ClotheslineItemGroups.ITEMS), new ConnectorItem.ConnectorBehavior() {
+    public static final Item CLOTHESLINE_ANCHOR = registerBlock(ClotheslineBlocks.CLOTHESLINE_ANCHOR);
+    public static final Item CLOTHESLINE = register("clothesline", new ConnectorItem(new Item.Settings(), new ConnectorItem.ConnectorBehavior() {
         @Override
         public boolean canConnectFrom(ItemUsageContext from) {
             return from.getWorld().getBlockState(from.getBlockPos()).getBlock() == ClotheslineBlocks.CLOTHESLINE_ANCHOR;
@@ -49,15 +49,11 @@ public class ClotheslineItems {
             return false;
         }
     }));
-    public static final Item CRANK = register("crank", new CrankItem(new Item.Settings().group(ClotheslineItemGroups.ITEMS)));
-    public static final Item SPINNER = register("spinner", new SpinnerItem(new Item.Settings().group(ClotheslineItemGroups.ITEMS)));
+    public static final Item CRANK = register("crank", new CrankItem(new Item.Settings()));
+    public static final Item SPINNER = register("spinner", new SpinnerItem(new Item.Settings()));
 
     private static Item registerBlock(Block block) {
         return register(new BlockItem(block, new Item.Settings()));
-    }
-
-    private static Item registerBlock(Block block, ItemGroup itemGroup) {
-        return register(new BlockItem(block, (new Item.Settings()).group(itemGroup)));
     }
 
     private static Item register(BlockItem item) {
@@ -65,7 +61,7 @@ public class ClotheslineItems {
     }
 
     private static Item register(Block block, Item item) {
-        return register(Registry.BLOCK.getId(block), item);
+        return register(Registries.BLOCK.getId(block), item);
     }
 
     private static Item register(String id, Item item) {
@@ -77,7 +73,7 @@ public class ClotheslineItems {
             ((BlockItem)item).appendBlocks(Item.BLOCK_ITEMS, item);
         }
 
-        return Registry.register(Registry.ITEM, id, item);
+        return Registry.register(Registries.ITEM, id, item);
     }
 
     public static void init() { }

@@ -4,9 +4,9 @@ import com.jamieswhiteshirt.clothesline.api.Line;
 import com.jamieswhiteshirt.clothesline.api.NetworkEdge;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.util.math.Matrix3f;
-import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 
 @Environment(EnvType.CLIENT)
 public final class LineProjection {
@@ -28,14 +28,14 @@ public final class LineProjection {
 
     public Transformation getTransformation() {
         Matrix4f model = new Matrix4f();
-        ((Matrix4fExtension) (Object) model).load(
+        ((Matrix4fExtension) model).load(
             (float) right.x, (float) up.x, (float) forward.x, (float) origin.x,
             (float) right.y, (float) up.y, (float) forward.y, (float) origin.y,
             (float) right.z, (float) up.z, (float) forward.z, (float) origin.z,
             0.0F, 0.0F, 0.0F, 1.0F
         );
         Matrix3f normal = new Matrix3f();
-        ((Matrix3fExtension) (Object) normal).load(
+        ((Matrix3fExtension) normal).load(
             (float) right.x, (float) up.x, (float) forward.x,
             (float) right.y, (float) up.y, (float) forward.y,
             (float) right.z, (float) up.z, (float) forward.z
@@ -82,14 +82,14 @@ public final class LineProjection {
         Vec3d upNormal = rightNormal.crossProduct(forward);
 
         Matrix4f model = new Matrix4f();
-        ((Matrix4fExtension) (Object) model).load(
+        ((Matrix4fExtension) model).load(
             (float) rightNormal.x, (float) upNormal.x, (float) forward.x, (float) from.x,
             (float) rightNormal.y, (float) upNormal.y, (float) forward.y, (float) from.y,
             (float) rightNormal.z, (float) upNormal.z, (float) forward.z, (float) from.z,
             0.0F, 0.0F, 0.0F, 1.0F
         );
         Matrix3f normal = new Matrix3f();
-        ((Matrix3fExtension) (Object) normal).load(
+        ((Matrix3fExtension) normal).load(
             (float) rightNormal.x, (float) upNormal.x, (float) forward.x,
             (float) rightNormal.y, (float) upNormal.y, (float) forward.y,
             (float) rightNormal.z, (float) upNormal.z, (float) forward.z

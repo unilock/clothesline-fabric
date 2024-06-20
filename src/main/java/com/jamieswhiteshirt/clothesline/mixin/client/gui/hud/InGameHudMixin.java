@@ -5,7 +5,7 @@ import com.jamieswhiteshirt.clothesline.api.client.RichInteractionType;
 import com.jamieswhiteshirt.clothesline.client.ClotheslineClient;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
@@ -17,7 +17,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Matrix4f;
+import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -27,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
-public abstract class InGameHudMixin extends DrawableHelper {
+public abstract class InGameHudMixin {
     @Unique private static final Identifier CLOTHESLINE_GUI_ICONS = new Identifier("clothesline", "textures/gui/icons.png");
     @Unique private static final int CLOTHESLINE_ICONS_WIDTH = 32, CLOTHESLINE_ICONS_HEIGHT = 16;
 
@@ -49,18 +49,19 @@ public abstract class InGameHudMixin extends DrawableHelper {
     @Shadow private int scaledWidth;
     @Shadow private int scaledHeight;
     @Shadow @Final private MinecraftClient client;
+    @Shadow @Final private static Identifier ICONS;
 
     @Shadow protected abstract PlayerEntity getCameraPlayer();
 
     @Inject(
         at = @At(
             value = "INVOKE",
-            target = "Lnet/minecraft/client/gui/hud/InGameHud;drawTexture(Lnet/minecraft/client/util/math/MatrixStack;IIIIII)V",
+            target = "Lnet/minecraft/client/gui/DrawContext;drawTexture(Lnet/minecraft/util/Identifier;IIIIII)V",
             ordinal = 0
         ),
         method = "renderCrosshair"
     )
-    private void renderCrosshair(MatrixStack matrices, CallbackInfo ci) {
+    private void renderCrosshair(DrawContext context, CallbackInfo ci) {
         PlayerEntity player = getCameraPlayer();
         HitResult hitResult = client.crosshairTarget;
         RichInteractionType richInteractionType = RichInteractionType.NONE;
@@ -78,13 +79,13 @@ public abstract class InGameHudMixin extends DrawableHelper {
         switch (richInteractionType) {
             case ROTATE_CLOCKWISE:
                 client.getTextureManager().bindTexture(CLOTHESLINE_GUI_ICONS);
-                drawTexture(matrices, scaledWidth / 2.0F - 16F, scaledHeight / 2.0F - 7.5F, 0.0F, 0.0F, 15, 15, CLOTHESLINE_ICONS_WIDTH, CLOTHESLINE_ICONS_HEIGHT);
-                client.getTextureManager().bindTexture(GUI_ICONS_TEXTURE);
+                drawTexture(context.getMatrices(), scaledWidth / 2.0F - 16F, scaledHeight / 2.0F - 7.5F, 0.0F, 0.0F, 15, 15, CLOTHESLINE_ICONS_WIDTH, CLOTHESLINE_ICONS_HEIGHT);
+                client.getTextureManager().bindTexture(ICONS);
                 break;
             case ROTATE_COUNTER_CLOCKWISE:
                 client.getTextureManager().bindTexture(CLOTHESLINE_GUI_ICONS);
-                drawTexture(matrices, scaledWidth / 2.0F, scaledHeight / 2.0F - 7.5F, 16.0F, 0.0F, 15, 15, CLOTHESLINE_ICONS_WIDTH, CLOTHESLINE_ICONS_HEIGHT);
-                client.getTextureManager().bindTexture(GUI_ICONS_TEXTURE);
+                drawTexture(context.getMatrices(), scaledWidth / 2.0F, scaledHeight / 2.0F - 7.5F, 16.0F, 0.0F, 15, 15, CLOTHESLINE_ICONS_WIDTH, CLOTHESLINE_ICONS_HEIGHT);
+                client.getTextureManager().bindTexture(ICONS);
                 break;
         }
     }

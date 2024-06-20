@@ -14,7 +14,7 @@ import java.util.function.BiConsumer;
 public class ResetConnectorStateMessageHandler implements BiConsumer<PacketContext, ResetConnectorStateMessage> {
     @Override
     public void accept(PacketContext ctx, ResetConnectorStateMessage msg) {
-        Entity entity = msg.entityId != -1 ? ctx.getPlayer().world.getEntityById(msg.entityId) : null;
+        Entity entity = msg.entityId != -1 ? ctx.getPlayer().getWorld().getEntityById(msg.entityId) : null;
         if (entity instanceof PlayerEntity) {
             ConnectorHolder connectorHolder = (ConnectorHolder) entity;
             connectorHolder.clothesline$setFrom(null);

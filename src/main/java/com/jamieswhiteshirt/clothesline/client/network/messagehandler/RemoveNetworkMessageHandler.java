@@ -13,7 +13,7 @@ import java.util.function.BiConsumer;
 public class RemoveNetworkMessageHandler implements BiConsumer<PacketContext, RemoveNetworkMessage> {
     @Override
     public void accept(PacketContext ctx, RemoveNetworkMessage msg) {
-        NetworkManager manager = ((NetworkManagerProvider) ctx.getPlayer().world).clothesline$getNetworkManager();
+        NetworkManager manager = ((NetworkManagerProvider) ctx.getPlayer().getWorld()).clothesline$getNetworkManager();
         manager.getNetworks().removeById(msg.networkId);
     }
 }

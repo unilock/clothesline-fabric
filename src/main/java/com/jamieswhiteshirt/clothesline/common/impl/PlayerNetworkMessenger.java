@@ -2,7 +2,11 @@ package com.jamieswhiteshirt.clothesline.common.impl;
 
 import com.jamieswhiteshirt.clothesline.api.Network;
 import com.jamieswhiteshirt.clothesline.common.network.MessageChannels;
-import com.jamieswhiteshirt.clothesline.common.network.message.*;
+import com.jamieswhiteshirt.clothesline.common.network.message.AddNetworkMessage;
+import com.jamieswhiteshirt.clothesline.common.network.message.RemoveAttachmentMessage;
+import com.jamieswhiteshirt.clothesline.common.network.message.RemoveNetworkMessage;
+import com.jamieswhiteshirt.clothesline.common.network.message.SetAttachmentMessage;
+import com.jamieswhiteshirt.clothesline.common.network.message.UpdateNetworkMessage;
 import com.jamieswhiteshirt.clothesline.common.util.BasicAttachment;
 import com.jamieswhiteshirt.clothesline.common.util.BasicNetwork;
 import com.jamieswhiteshirt.clothesline.internal.NetworkMessenger;

@@ -1,6 +1,10 @@
 package com.jamieswhiteshirt.clothesline.common.impl;
 
-import com.jamieswhiteshirt.clothesline.api.*;
+import com.jamieswhiteshirt.clothesline.api.Network;
+import com.jamieswhiteshirt.clothesline.api.NetworkCollection;
+import com.jamieswhiteshirt.clothesline.api.NetworkManager;
+import com.jamieswhiteshirt.clothesline.api.NetworkNode;
+import com.jamieswhiteshirt.clothesline.api.NetworkState;
 import com.jamieswhiteshirt.clothesline.common.Util;
 import com.jamieswhiteshirt.clothesline.common.util.NetworkStateBuilder;
 import net.minecraft.entity.LivingEntity;

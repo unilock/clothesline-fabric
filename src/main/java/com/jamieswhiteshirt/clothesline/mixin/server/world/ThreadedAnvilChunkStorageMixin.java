@@ -32,7 +32,7 @@ public abstract class ThreadedAnvilChunkStorageMixin extends VersionedChunkStora
         method = "sendChunkDataPackets"
     )
     private void sendChunkDataPackets(ServerPlayerEntity player, MutableObject<ChunkDataS2CPacket> cachedDataPacket, WorldChunk chunk, CallbackInfo ci) {
-        ChunkWatchCallback.WATCH.invoker().accept(player.world, chunk.getPos(), player);
+        ChunkWatchCallback.WATCH.invoker().accept(player.getWorld(), chunk.getPos(), player);
     }
 
     @Inject(

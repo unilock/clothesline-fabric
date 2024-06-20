@@ -1,6 +1,10 @@
 package com.jamieswhiteshirt.clothesline.common.network.messagehandler;
 
-import com.jamieswhiteshirt.clothesline.api.*;
+import com.jamieswhiteshirt.clothesline.api.Line;
+import com.jamieswhiteshirt.clothesline.api.Network;
+import com.jamieswhiteshirt.clothesline.api.NetworkManager;
+import com.jamieswhiteshirt.clothesline.api.NetworkManagerProvider;
+import com.jamieswhiteshirt.clothesline.api.Path;
 import com.jamieswhiteshirt.clothesline.common.network.message.HitNetworkMessage;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,7 +19,7 @@ public class HitNetworkMessageHandler implements BiConsumer<PacketContext, HitNe
     @Override
     public void accept(PacketContext ctx, HitNetworkMessage message) {
         PlayerEntity player = ctx.getPlayer();
-        World world = player.world;
+        World world = player.getWorld();
         NetworkManager manager = ((NetworkManagerProvider) world).clothesline$getNetworkManager();
         Network network = manager.getNetworks().getById(message.networkId);
         if (network != null) {

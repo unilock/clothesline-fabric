@@ -1,6 +1,10 @@
 package com.jamieswhiteshirt.clothesline.client.raycast;
 
-import com.jamieswhiteshirt.clothesline.api.*;
+import com.jamieswhiteshirt.clothesline.api.AttachmentUnit;
+import com.jamieswhiteshirt.clothesline.api.NetworkEdge;
+import com.jamieswhiteshirt.clothesline.api.NetworkManager;
+import com.jamieswhiteshirt.clothesline.api.NetworkState;
+import com.jamieswhiteshirt.clothesline.api.Path;
 import com.jamieswhiteshirt.clothesline.api.util.MutableSortedIntMap;
 import com.jamieswhiteshirt.clothesline.client.EdgeAttachmentTransformations;
 import com.jamieswhiteshirt.clothesline.client.LineProjection;
@@ -8,8 +12,12 @@ import com.jamieswhiteshirt.clothesline.client.Transformation;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
+import org.joml.Vector4f;
 
 import java.util.List;
 import java.util.Optional;
@@ -96,16 +104,16 @@ public class Raycasting {
                 Matrix4f w2l = transformations.getW2LForAttachment(momentum, attachmentOffset, tickDelta);
 
                 lFrom.set((float) viewRay.from.x, (float) viewRay.from.y, (float) viewRay.from.z, 1.0F);
-                lFrom.transform(w2l);
+                lFrom.mulTranspose(w2l);
                 lTo.set((float) viewRay.to.x, (float) viewRay.to.y, (float) viewRay.to.z, 1.0F);
-                lTo.transform(w2l);
+                lTo.mulTranspose(w2l);
 
-                Optional<Vec3d> lResult = ATTACHMENT_BOX.raycast(new Vec3d(lFrom.getX(), lFrom.getY(), lFrom.getZ()), new Vec3d(lTo.getX(), lTo.getY(), lTo.getZ()));
+                Optional<Vec3d> lResult = ATTACHMENT_BOX.raycast(new Vec3d(lFrom.x, lFrom.y, lFrom.z), new Vec3d(lTo.x, lTo.y, lTo.z));
                 if (lResult.isPresent()) {
                     Vec3d lHit = lResult.get();
                     wHit.set((float) lHit.x, (float) lHit.y, (float) lHit.z, 1.0F);
-                    wHit.transform(l2w);
-                    double distanceSq = new Vec3d(wHit.getX(), wHit.getY(), wHit.getZ()).squaredDistanceTo(viewRay.from);
+                    wHit.mulTranspose(l2w);
+                    double distanceSq = new Vec3d(wHit.x, wHit.y, wHit.z).squaredDistanceTo(viewRay.from);
                     if (distanceSq < maxDistanceSq) {
                         maxDistanceSq = distanceSq;
                         hit = new AttachmentRaycastHit(distanceSq, edge, attachment.getKey(), new Transformation(l2w, new Matrix3f(l2w)));
