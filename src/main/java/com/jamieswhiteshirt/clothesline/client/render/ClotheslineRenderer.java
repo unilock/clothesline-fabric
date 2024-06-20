@@ -182,8 +182,8 @@ public final class ClotheslineRenderer {
             float x = EDGE_VERTEX_X[side];
             float y = EDGE_VERTEX_Y[side];
 
-            vertices.vertex(matrices.peek().getPositionMatrix(), x, y, 0.0F).color(r, g, b, a).next();
-            vertices.vertex(matrices.peek().getPositionMatrix(), x, y, (float) edge.getPathEdge().getLength() / AttachmentUnit.UNITS_PER_BLOCK).color(r, g, b, a).next();
+            vertices.vertex(matrices.peek().getPositionMatrix(), x, y, 0.0F).color(r, g, b, a).normal(matrices.peek().getNormalMatrix(), 0, 0, 0).next();
+            vertices.vertex(matrices.peek().getPositionMatrix(), x, y, (float) edge.getPathEdge().getLength() / AttachmentUnit.UNITS_PER_BLOCK).color(r, g, b, a).normal(matrices.peek().getNormalMatrix(), 0.0F, 1.0F, 0.0F).next();
         }
         matrices.pop();
     }

@@ -3,6 +3,7 @@ package com.jamieswhiteshirt.clothesline.client;
 import com.jamieswhiteshirt.clothesline.api.client.RichInteractionRegistry;
 import com.jamieswhiteshirt.clothesline.client.impl.RichInteractionRegistryImpl;
 import com.jamieswhiteshirt.clothesline.client.network.ClientMessageHandling;
+import com.jamieswhiteshirt.clothesline.client.raycast.NetworkRaycastHitEntity;
 import com.jamieswhiteshirt.clothesline.client.render.BakedModels;
 import com.jamieswhiteshirt.clothesline.common.block.ClotheslineBlocks;
 import com.jamieswhiteshirt.clothesline.internal.WorldExtension;
@@ -13,6 +14,8 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 @Environment(EnvType.CLIENT)
 public class ClotheslineClient implements ClientModInitializer {
@@ -30,5 +33,7 @@ public class ClotheslineClient implements ClientModInitializer {
         FabricLoader.getInstance()
             .getEntrypoints("clothesline:rich_interaction", RichInteractionRegistry.Consumer.class)
             .forEach(consumer -> consumer.accept(richInteractionRegistry));
+
+        Registry.register(Registry.ENTITY_TYPE, new Identifier("clothesline", "network_raycast_hit"), NetworkRaycastHitEntity.ENTITY_TYPE);
     }
 }

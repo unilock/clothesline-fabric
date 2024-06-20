@@ -7,6 +7,7 @@ import com.jamieswhiteshirt.clothesline.client.render.ClotheslineRenderLayers;
 import com.jamieswhiteshirt.clothesline.client.render.ClotheslineRenderer;
 import com.jamieswhiteshirt.clothesline.common.item.ClotheslineItems;
 import com.jamieswhiteshirt.clothesline.internal.ConnectorHolder;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
@@ -17,22 +18,18 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Matrix4f;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.profiler.Profiler;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(WorldRenderer.class)
 public abstract class WorldRendererMixin {
     @Shadow @Final private MinecraftClient client;
     @Shadow private ClientWorld world;
-    @Shadow @Final private BufferBuilderStorage bufferBuilders;
     private final ClotheslineRenderer clotheslineRenderer = new ClotheslineRenderer(MinecraftClient.getInstance());
 
     @Inject(
@@ -41,11 +38,9 @@ public abstract class WorldRendererMixin {
             target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V",
             args = "ldc=blockentities"
         ),
-        method = "render(Lnet/minecraft/client/util/math/MatrixStack;FJZLnet/minecraft/client/render/Camera;Lnet/minecraft/client/render/GameRenderer;Lnet/minecraft/client/render/LightmapTextureManager;Lnet/minecraft/util/math/Matrix4f;)V",
-        locals = LocalCapture.CAPTURE_FAILHARD
+        method = "render(Lnet/minecraft/client/util/math/MatrixStack;FJZLnet/minecraft/client/render/Camera;Lnet/minecraft/client/render/GameRenderer;Lnet/minecraft/client/render/LightmapTextureManager;Lnet/minecraft/util/math/Matrix4f;)V"
     )
-    // SHUT UP
-    private void renderClotheslines(MatrixStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f positionMatrix, CallbackInfo ci, Profiler profiler, boolean hasNoChunkUpdaters, Vec3d cameraPos, double x, double y, double z, Matrix4f modelMatrix, boolean hasCapturedFrustum, Frustum frustum, boolean outlineSomething, VertexConsumerProvider.Immediate immediate) {
+    private void renderClotheslines(MatrixStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f positionMatrix, CallbackInfo ci, @Local(ordinal = 0) double x, @Local(ordinal = 1) double y, @Local(ordinal = 2) double z, @Local Frustum frustum, @Local VertexConsumerProvider.Immediate immediate) {
         world.getProfiler().swap("clotheslines");
 
         NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
@@ -60,8 +55,7 @@ public abstract class WorldRendererMixin {
         }
 
         Entity entity = MinecraftClient.getInstance().getCameraEntity();
-        if (client.options.getPerspective().isFirstPerson() && entity instanceof PlayerEntity) {
-            PlayerEntity playerEntity = (PlayerEntity) entity;
+        if (client.options.getPerspective().isFirstPerson() && entity instanceof PlayerEntity playerEntity) {
             if (playerEntity.getActiveItem().getItem() == ClotheslineItems.CLOTHESLINE) {
                 ConnectorHolder connector = (ConnectorHolder) playerEntity;
                 ItemUsageContext from = connector.clothesline$getFrom();
@@ -86,19 +80,15 @@ public abstract class WorldRendererMixin {
             shift = At.Shift.AFTER,
             ordinal = 1
         ),
-        method = "render(Lnet/minecraft/client/util/math/MatrixStack;FJZLnet/minecraft/client/render/Camera;Lnet/minecraft/client/render/GameRenderer;Lnet/minecraft/client/render/LightmapTextureManager;Lnet/minecraft/util/math/Matrix4f;)V",
-        locals = LocalCapture.CAPTURE_FAILHARD
+        method = "render(Lnet/minecraft/client/util/math/MatrixStack;FJZLnet/minecraft/client/render/Camera;Lnet/minecraft/client/render/GameRenderer;Lnet/minecraft/client/render/LightmapTextureManager;Lnet/minecraft/util/math/Matrix4f;)V"
     )
-    // SHUT UP
-    private void renderHighlight(MatrixStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f projectionMatrix, CallbackInfo ci, Profiler profiler, boolean hasNoChunkUpdaters, Vec3d cameraPos, double x, double y, double z, Matrix4f modelMatrix, boolean hasCapturedFrustum, Frustum frustum, boolean outlineSomething, VertexConsumerProvider.Immediate immediate) {
+    private void renderHighlight(MatrixStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f positionMatrix, CallbackInfo ci, @Local Profiler profiler, @Local(ordinal = 0) double x, @Local(ordinal = 1) double y, @Local(ordinal = 2) double z, @Local VertexConsumerProvider.Immediate immediate) {
         HitResult hitResult = client.crosshairTarget;
-        if (renderBlockOutline && hitResult != null && hitResult.getType() == HitResult.Type.ENTITY && ((EntityHitResult) hitResult).getEntity() instanceof NetworkRaycastHitEntity) {
+        if (renderBlockOutline && hitResult != null && hitResult.getType() == HitResult.Type.ENTITY && ((EntityHitResult) hitResult).getEntity() instanceof NetworkRaycastHitEntity entity) {
             profiler.swap("outline");
-            NetworkRaycastHitEntity entity = (NetworkRaycastHitEntity) ((EntityHitResult) hitResult).getEntity();
-            VertexConsumer vertexConsumer = immediate.getBuffer(RenderLayer.getLines());
             matrices.push();
             matrices.translate(-x, -y, -z);
-            entity.getHit().renderHighlight(clotheslineRenderer, matrices, vertexConsumer, 0.0F, 0.0F, 0.0F, 0.4F);
+            entity.getHit().renderHighlight(clotheslineRenderer, matrices, immediate.getBuffer(RenderLayer.getLines()), 0.0F, 0.0F, 0.0F, 0.4F);
             matrices.pop();
         }
     }

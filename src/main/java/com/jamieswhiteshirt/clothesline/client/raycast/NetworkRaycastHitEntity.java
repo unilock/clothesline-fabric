@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 @Environment(EnvType.CLIENT)
 public final class NetworkRaycastHitEntity extends Entity implements EntityPickInteractionAware {
-    private static final EntityType<NetworkRaycastHitEntity> ENTITY_TYPE = FabricEntityTypeBuilder.<NetworkRaycastHitEntity>create(SpawnGroup.MISC, NetworkRaycastHitEntity::new).dimensions(EntityDimensions.changing(0.25F, 0.25F)).build();
+    public static final EntityType<NetworkRaycastHitEntity> ENTITY_TYPE = FabricEntityTypeBuilder.<NetworkRaycastHitEntity>create(SpawnGroup.MISC, NetworkRaycastHitEntity::new).dimensions(EntityDimensions.changing(0.25F, 0.25F)).build();
 
     private NetworkRaycastHit hit;
 
