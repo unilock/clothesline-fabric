@@ -21,7 +21,7 @@ import java.nio.file.Path;
 
 @Mixin(ThreadedAnvilChunkStorage.class)
 public abstract class ThreadedAnvilChunkStorageMixin extends VersionedChunkStorage {
-    @Shadow @Final private ServerWorld world;
+    @Shadow @Final ServerWorld world;
 
     public ThreadedAnvilChunkStorageMixin(Path directory, DataFixer dataFixer, boolean dsync) {
         super(directory, dataFixer, dsync);

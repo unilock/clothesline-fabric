@@ -21,15 +21,17 @@ import net.minecraft.util.math.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin extends DrawableHelper {
-    private static final Identifier CLOTHESLINE_GUI_ICONS = new Identifier("clothesline", "textures/gui/icons.png");
-    private static final int CLOTHESLINE_ICONS_WIDTH = 32, CLOTHESLINE_ICONS_HEIGHT = 16;
+    @Unique private static final Identifier CLOTHESLINE_GUI_ICONS = new Identifier("clothesline", "textures/gui/icons.png");
+    @Unique private static final int CLOTHESLINE_ICONS_WIDTH = 32, CLOTHESLINE_ICONS_HEIGHT = 16;
 
+    @Unique
     private static void drawTexture(MatrixStack matrices, float x, float y, float u, float v, int regionWidth, int regionHeight, int textureWidth, int textureHeight) {
         Matrix4f matrix = matrices.peek().getPositionMatrix();
         float uScale = 1.0F / textureWidth;

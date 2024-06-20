@@ -102,7 +102,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
     @Override
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean moved) {
         if (oldState.getBlock() != state.getBlock()) {
-            NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
+            NetworkManager manager = ((NetworkManagerProvider) world).clothesline$getNetworkManager();
             manager.createNode(pos);
         }
     }
@@ -111,7 +111,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (state.getBlock() != newState.getBlock()) {
-            NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
+            NetworkManager manager = ((NetworkManagerProvider) world).clothesline$getNetworkManager();
             manager.breakNode(null, pos);
             super.onStateReplaced(state, world, pos, newState, moved);
         }
@@ -141,7 +141,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
 
     @Override
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
+        NetworkManager manager = ((NetworkManagerProvider) world).clothesline$getNetworkManager();
         manager.breakNode(player, pos);
         super.onBreak(world, pos, state, player);
     }
@@ -189,7 +189,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
 
     @Override
     public SidedInventory getInventory(BlockState state, WorldAccess world, BlockPos pos) {
-        return new ClotheslineAnchorInventory(((NetworkManagerProvider) world).getNetworkManager(), pos);
+        return new ClotheslineAnchorInventory(((NetworkManagerProvider) world).clothesline$getNetworkManager(), pos);
     }
 
     @Deprecated
@@ -209,7 +209,7 @@ public class ClotheslineAnchorBlock extends WallMountedBlock implements Inventor
 
     @Nullable
     private static NetworkNode getNode(World world, BlockPos pos) {
-        return ((NetworkManagerProvider) world).getNetworkManager().getNetworks().getNodes().get(pos);
+        return ((NetworkManagerProvider) world).clothesline$getNetworkManager().getNetworks().getNodes().get(pos);
     }
 
     public static int getCrankMultiplier(BlockPos pos, double hitX, double hitZ, PlayerEntity player) {

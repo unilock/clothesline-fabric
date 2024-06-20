@@ -18,7 +18,7 @@ public class TryUseItemOnNetworkMessageHandler implements BiConsumer<PacketConte
     @Override
     public void accept(PacketContext ctx, TryUseItemOnNetworkMessage message) {
         ServerPlayerEntity player = (ServerPlayerEntity) ctx.getPlayer();
-        NetworkManager manager = ((NetworkManagerProvider) player.world).getNetworkManager();
+        NetworkManager manager = ((NetworkManagerProvider) player.world).clothesline$getNetworkManager();
         Network network = manager.getNetworks().getById(message.networkId);
         if (network != null) {
             if (Validation.canReachAttachment(player, network, message.attachmentKey)) {

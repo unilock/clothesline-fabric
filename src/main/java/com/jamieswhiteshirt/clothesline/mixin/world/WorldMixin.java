@@ -23,7 +23,7 @@ public abstract class WorldMixin implements CollisionView, NetworkManagerProvide
                     MathHelper.floor(bb.minX), MathHelper.floor(bb.minY), MathHelper.floor(bb.minZ),
                     MathHelper.ceil(bb.maxX), MathHelper.ceil(bb.maxY), MathHelper.ceil(bb.maxZ)
                 );
-                boolean intersects = getNetworkManager().getNetworks().getEdges()
+                boolean intersects = clothesline$getNetworkManager().getNetworks().getEdges()
                     .values(box::intersectsClosed)
                     .anyMatch(edge -> {
                         Line line = edge.getPathEdge().getLine();

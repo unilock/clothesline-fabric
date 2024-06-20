@@ -22,6 +22,7 @@ import net.minecraft.util.profiler.Profiler;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -30,7 +31,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class WorldRendererMixin {
     @Shadow @Final private MinecraftClient client;
     @Shadow private ClientWorld world;
-    private final ClotheslineRenderer clotheslineRenderer = new ClotheslineRenderer(MinecraftClient.getInstance());
+    @Unique private final ClotheslineRenderer clotheslineRenderer = new ClotheslineRenderer(MinecraftClient.getInstance());
 
     @Inject(
         at = @At(
@@ -43,7 +44,7 @@ public abstract class WorldRendererMixin {
     private void renderClotheslines(MatrixStack matrices, float tickDelta, long limitTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f positionMatrix, CallbackInfo ci, @Local(ordinal = 0) double x, @Local(ordinal = 1) double y, @Local(ordinal = 2) double z, @Local Frustum frustum, @Local VertexConsumerProvider.Immediate immediate) {
         world.getProfiler().swap("clotheslines");
 
-        NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
+        NetworkManager manager = ((NetworkManagerProvider) world).clothesline$getNetworkManager();
         boolean showDebugInfo = client.options.debugEnabled;
 
         matrices.push();

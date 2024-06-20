@@ -36,7 +36,7 @@ public class GameRendererMixin {
         Entity cameraEntity = client.getCameraEntity();
         HitResult hitResult = client.crosshairTarget;
         if (hitResult != null) {
-            NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
+            NetworkManager manager = ((NetworkManagerProvider) world).clothesline$getNetworkManager();
             Vec3d rayFrom = cameraEntity.getCameraPosVec(tickDelta);
             Vec3d rayTo = hitResult.getPos();
 

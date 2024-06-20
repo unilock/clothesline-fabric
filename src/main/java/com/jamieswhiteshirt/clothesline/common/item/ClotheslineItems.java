@@ -31,7 +31,7 @@ public class ClotheslineItems {
         @Override
         public boolean connect(ItemUsageContext from, ItemUsageContext to) {
             World world = to.getWorld();
-            NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
+            NetworkManager manager = ((NetworkManagerProvider) world).clothesline$getNetworkManager();
             if (world.getBlockState(to.getBlockPos()).getBlock() == ClotheslineBlocks.CLOTHESLINE_ANCHOR) {
                 Vec3d fromVec = Utility.midVec(from.getBlockPos());
                 Vec3d toVec = Utility.midVec(to.getBlockPos());

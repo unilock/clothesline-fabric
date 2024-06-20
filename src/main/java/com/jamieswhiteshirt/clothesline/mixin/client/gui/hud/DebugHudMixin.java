@@ -43,7 +43,7 @@ public class DebugHudMixin extends DrawableHelper {
                 ));
             }
             if (blockHit != null && blockHit.getType() == HitResult.Type.BLOCK) {
-                NetworkManager manager = ((NetworkManagerProvider) client.world).getNetworkManager();
+                NetworkManager manager = ((NetworkManagerProvider) client.world).clothesline$getNetworkManager();
                 NetworkNode node = manager.getNetworks().getNodes().get(((BlockHitResult) blockHit).getBlockPos());
                 if (node != null) {
                     cir.getReturnValue().addAll(Arrays.asList(

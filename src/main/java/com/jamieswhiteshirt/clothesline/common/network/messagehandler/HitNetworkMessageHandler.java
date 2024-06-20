@@ -16,7 +16,7 @@ public class HitNetworkMessageHandler implements BiConsumer<PacketContext, HitNe
     public void accept(PacketContext ctx, HitNetworkMessage message) {
         PlayerEntity player = ctx.getPlayer();
         World world = player.world;
-        NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
+        NetworkManager manager = ((NetworkManagerProvider) world).clothesline$getNetworkManager();
         Network network = manager.getNetworks().getById(message.networkId);
         if (network != null) {
             Path.Edge edge = network.getState().getPath().getEdgeForPosition(message.offset);
