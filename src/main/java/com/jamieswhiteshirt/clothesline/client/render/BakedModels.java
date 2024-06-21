@@ -28,7 +28,7 @@ public class BakedModels {
     public static BakedModel pulleyWheelRope;
 
     public static void init() {
-        ModelLoadingRegistry.INSTANCE.registerAppender((manager, out) -> {
+        ModelLoadingRegistry.INSTANCE.registerModelProvider((manager, out) -> {
             out.accept(PULLEY_WHEEL);
             out.accept(PULLEY_WHEEL_ROPE);
         });

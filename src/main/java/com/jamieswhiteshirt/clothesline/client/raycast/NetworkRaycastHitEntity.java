@@ -2,10 +2,8 @@ package com.jamieswhiteshirt.clothesline.client.raycast;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-
 import net.fabricmc.fabric.api.entity.EntityPickInteractionAware;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
@@ -13,13 +11,15 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 @Environment(EnvType.CLIENT)
 public final class NetworkRaycastHitEntity extends Entity implements EntityPickInteractionAware {
@@ -28,7 +28,7 @@ public final class NetworkRaycastHitEntity extends Entity implements EntityPickI
     private NetworkRaycastHit hit;
 
     public static void init() {
-        Registry.register(Registry.ENTITY_TYPE, new Identifier("clothesline", "line"), ENTITY_TYPE);
+        Registry.register(Registries.ENTITY_TYPE, new Identifier("clothesline", "line"), ENTITY_TYPE);
     }
 
     public NetworkRaycastHitEntity(EntityType<NetworkRaycastHitEntity> entityType, World world) {
@@ -55,7 +55,7 @@ public final class NetworkRaycastHitEntity extends Entity implements EntityPickI
     }
 
     @Override
-    public Packet<?> createSpawnPacket() {
+    public Packet<ClientPlayPacketListener> createSpawnPacket() {
         return null;
     }
 

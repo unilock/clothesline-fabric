@@ -2,7 +2,6 @@ package com.jamieswhiteshirt.clothesline.api;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
-
 import org.jetbrains.annotations.Nullable;
 
 /**

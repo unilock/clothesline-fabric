@@ -21,7 +21,7 @@ import java.nio.file.Path;
 
 @Mixin(ThreadedAnvilChunkStorage.class)
 public abstract class ThreadedAnvilChunkStorageMixin extends VersionedChunkStorage {
-    @Shadow @Final private ServerWorld world;
+    @Shadow @Final ServerWorld world;
 
     public ThreadedAnvilChunkStorageMixin(Path directory, DataFixer dataFixer, boolean dsync) {
         super(directory, dataFixer, dsync);
@@ -32,7 +32,7 @@ public abstract class ThreadedAnvilChunkStorageMixin extends VersionedChunkStora
         method = "sendChunkDataPackets"
     )
     private void sendChunkDataPackets(ServerPlayerEntity player, MutableObject<ChunkDataS2CPacket> cachedDataPacket, WorldChunk chunk, CallbackInfo ci) {
-        ChunkWatchCallback.WATCH.invoker().accept(player.world, chunk.getPos(), player);
+        ChunkWatchCallback.WATCH.invoker().accept(player.getWorld(), chunk.getPos(), player);
     }
 
     @Inject(

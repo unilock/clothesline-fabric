@@ -14,7 +14,7 @@ import java.util.function.BiConsumer;
 public class UpdateNetworkMessageHandler implements BiConsumer<PacketContext, UpdateNetworkMessage> {
     @Override
     public void accept(PacketContext ctx, UpdateNetworkMessage msg) {
-        NetworkManager manager = ((NetworkManagerProvider) ctx.getPlayer().world).getNetworkManager();
+        NetworkManager manager = ((NetworkManagerProvider) ctx.getPlayer().getWorld()).getNetworkManager();
         Network network = manager.getNetworks().getById(msg.networkId);
         if (network != null) {
             network.getState().setShift(msg.shift);

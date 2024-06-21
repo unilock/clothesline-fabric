@@ -1,11 +1,9 @@
 package com.jamieswhiteshirt.clothesline.mixin.server.network;
 
 import com.jamieswhiteshirt.clothesline.common.event.TrackEntityCallback;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.server.network.EntityTrackerEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
-
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

@@ -4,8 +4,8 @@ import com.jamieswhiteshirt.clothesline.Clothesline;
 import com.jamieswhiteshirt.clothesline.common.util.BasicPersistentNetwork;
 import com.jamieswhiteshirt.clothesline.common.util.NBTSerialization;
 import com.jamieswhiteshirt.clothesline.internal.NetworkProvider;
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.world.PersistentState;
 
 import java.util.stream.Collectors;
@@ -26,7 +26,7 @@ public class NetworkProviderPersistentState extends PersistentState {
         NetworkProviderPersistentState data = new NetworkProviderPersistentState(provider);
         try {
             int version;
-            if (!tag.contains("Version", NbtType.INT)) {
+            if (!tag.contains("Version", NbtElement.INT_TYPE)) {
                 Clothesline.LOGGER.warn("Invalid save data. Expected a Version, found no Version. Assuming Version 0.");
                 version = 0;
             } else {
@@ -38,13 +38,13 @@ public class NetworkProviderPersistentState extends PersistentState {
                 throw new Exception();
             }
 
-            if (!tag.contains("Networks", NbtType.LIST)) {
+            if (!tag.contains("Networks", NbtElement.LIST_TYPE)) {
                 Clothesline.LOGGER.error("Invalid save data. Expected list of Networks, found none. Discarding save data.");
                 throw new Exception();
             }
 
             provider.reset(
-                    NBTSerialization.readPersistentNetworks(tag.getList("Networks", NbtType.COMPOUND)).stream()
+                    NBTSerialization.readPersistentNetworks(tag.getList("Networks", NbtElement.COMPOUND_TYPE)).stream()
                             .map(BasicPersistentNetwork::toAbsolute)
                             .collect(Collectors.toList())
             );

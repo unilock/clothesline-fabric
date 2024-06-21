@@ -15,7 +15,7 @@ import java.util.function.BiConsumer;
 public class RemoveAttachmentMessageHandler implements BiConsumer<PacketContext, RemoveAttachmentMessage> {
     @Override
     public void accept(PacketContext ctx, RemoveAttachmentMessage msg) {
-        NetworkManager manager = ((NetworkManagerProvider) ctx.getPlayer().world).getNetworkManager();
+        NetworkManager manager = ((NetworkManagerProvider) ctx.getPlayer().getWorld()).getNetworkManager();
         Network network = manager.getNetworks().getById(msg.networkId);
         if (network != null) {
             network.setAttachment(msg.attachmentKey, ItemStack.EMPTY);

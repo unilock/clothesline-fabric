@@ -1,8 +1,8 @@
 package com.jamieswhiteshirt.clothesline.common.util;
 
-import net.fabricmc.fabric.api.util.NbtType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.math.BlockPos;
 
@@ -54,7 +54,7 @@ public class NBTSerialization {
             nbt.getInt("Shift"),
             nbt.getInt("Momentum"),
             readBasicTree(nbt.getCompound("Tree")),
-            readAttachments(nbt.getList("Attachments", NbtType.COMPOUND))
+            readAttachments(nbt.getList("Attachments", NbtElement.COMPOUND_TYPE))
         );
     }
 
@@ -75,7 +75,7 @@ public class NBTSerialization {
                 nbt.getInt("y"),
                 nbt.getInt("z")
             ),
-            readBasicTreeEdges(nbt.getList("Children", NbtType.COMPOUND)),
+            readBasicTreeEdges(nbt.getList("Children", NbtElement.COMPOUND_TYPE)),
             nbt.getInt("BaseRotation")
         );
     }

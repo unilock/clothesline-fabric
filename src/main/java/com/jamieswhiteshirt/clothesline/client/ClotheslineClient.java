@@ -8,7 +8,6 @@ import com.jamieswhiteshirt.clothesline.client.render.BakedModels;
 import com.jamieswhiteshirt.clothesline.client.render.ClotheslineRenderLayers;
 import com.jamieswhiteshirt.clothesline.common.block.ClotheslineBlocks;
 import com.jamieswhiteshirt.clothesline.internal.WorldExtension;
-
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -16,15 +15,14 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.CoreShaderRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.render.RenderLayer;
-
-import net.minecraft.client.render.Shader;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class ClotheslineClient implements ClientModInitializer {
     public static RichInteractionRegistry richInteractionRegistry = new RichInteractionRegistryImpl();
-    private static Shader clotheslineShader;
+    private static ShaderProgram clotheslineShader;
 
     @Override
     public void onInitializeClient() {
@@ -45,7 +43,7 @@ public class ClotheslineClient implements ClientModInitializer {
             .forEach(consumer -> consumer.accept(richInteractionRegistry));
     }
 
-    public static Shader getClotheslineShader() {
+    public static ShaderProgram getClotheslineShader() {
     	return clotheslineShader;
     }
 }

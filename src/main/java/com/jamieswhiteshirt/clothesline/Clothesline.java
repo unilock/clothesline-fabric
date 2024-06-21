@@ -3,6 +3,7 @@ package com.jamieswhiteshirt.clothesline;
 import com.jamieswhiteshirt.clothesline.common.block.ClotheslineBlocks;
 import com.jamieswhiteshirt.clothesline.common.event.ChunkWatchCallback;
 import com.jamieswhiteshirt.clothesline.common.event.TrackEntityCallback;
+import com.jamieswhiteshirt.clothesline.common.item.ClotheslineItemGroups;
 import com.jamieswhiteshirt.clothesline.common.item.ClotheslineItems;
 import com.jamieswhiteshirt.clothesline.common.network.MessageChannels;
 import com.jamieswhiteshirt.clothesline.common.network.ServerMessageHandling;
@@ -21,7 +22,6 @@ import net.minecraft.network.packet.s2c.play.CustomPayloadS2CPacket;
 import net.minecraft.util.hit.BlockHitResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import org.jetbrains.annotations.Nullable;
 
 public class Clothesline implements ModInitializer {
@@ -31,6 +31,7 @@ public class Clothesline implements ModInitializer {
     public void onInitialize() {
         ClotheslineBlocks.init();
         ClotheslineItems.init();
+        ClotheslineItemGroups.init();
         ClotheslineSoundEvents.init();
         ServerMessageHandling.init();
 

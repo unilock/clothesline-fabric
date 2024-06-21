@@ -7,10 +7,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements ConnectorHolder {
-    private ItemUsageContext connectFrom;
+    @Unique private ItemUsageContext connectFrom;
 
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> var1, World var2) {
         super(var1, var2);

@@ -1,8 +1,5 @@
-import org.w3c.dom.NodeList
-
 plugins {
-    id 'fabric-loom' version '1.3-SNAPSHOT'
-    id 'io.github.juuxel.loom-vineflower' version '1.11.0'
+    id 'fabric-loom' version '1.7-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -15,6 +12,12 @@ base {
 
 loom {
     accessWidenerPath = file("src/main/resources/clothesline.accesswidener")
+
+    mods {
+        "clothesline" {
+            sourceSet("main")
+        }
+    }
 }
 
 repositories {
@@ -65,7 +68,7 @@ java {
 
 jar {
     from("LICENSE.md") {
-        rename { "${it}_${project.base.archivesName.get()}"}
+        rename { "${it}_${project.base.archivesName.get()}" }
     }
 }
 

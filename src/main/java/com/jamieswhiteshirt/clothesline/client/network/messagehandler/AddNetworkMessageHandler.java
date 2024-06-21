@@ -13,7 +13,7 @@ import java.util.function.BiConsumer;
 public class AddNetworkMessageHandler implements BiConsumer<PacketContext, AddNetworkMessage> {
     @Override
     public void accept(PacketContext ctx, AddNetworkMessage msg) {
-        NetworkManager manager = ((NetworkManagerProvider) ctx.getPlayer().world).getNetworkManager();
+        NetworkManager manager = ((NetworkManagerProvider) ctx.getPlayer().getWorld()).getNetworkManager();
         manager.getNetworks().add(msg.network.toAbsolute());
     }
 }

@@ -4,6 +4,7 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
 import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.render.model.json.Transformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Direction;
@@ -12,7 +13,7 @@ import net.minecraft.util.math.random.Random;
 import java.util.List;
 
 public class ItemModelRenderer {
-    public static void renderModel(BakedModel bakedModel, ModelTransformation.Mode modelTransformationType, MatrixStack matrices, VertexConsumer vertices, int light, int overlay) {
+    public static void renderModel(BakedModel bakedModel, ModelTransformationMode modelTransformationType, MatrixStack matrices, VertexConsumer vertices, int light, int overlay) {
         if (bakedModel.isBuiltin()) return;
 
         matrices.push();
@@ -50,6 +51,6 @@ public class ItemModelRenderer {
     }
 
     private static boolean isInverted(Transformation transformation) {
-        return transformation.scale.getX() < 0.0F ^ transformation.scale.getY() < 0.0F ^ transformation.scale.getZ() < 0.0F;
+        return transformation.scale.x < 0.0F ^ transformation.scale.y < 0.0F ^ transformation.scale.z < 0.0F;
     }
 }

@@ -4,9 +4,9 @@ import com.jamieswhiteshirt.clothesline.api.Line;
 import com.jamieswhiteshirt.clothesline.api.NetworkEdge;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.util.math.Matrix3f;
-import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 
 @Environment(EnvType.CLIENT)
 public final class LineProjection {

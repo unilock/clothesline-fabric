@@ -15,7 +15,7 @@ public class HitNetworkMessageHandler implements BiConsumer<PacketContext, HitNe
     @Override
     public void accept(PacketContext ctx, HitNetworkMessage message) {
         PlayerEntity player = ctx.getPlayer();
-        World world = player.world;
+        World world = player.getWorld();
         NetworkManager manager = ((NetworkManagerProvider) world).getNetworkManager();
         Network network = manager.getNetworks().getById(message.networkId);
         if (network != null) {

@@ -18,7 +18,7 @@ public class HitAttachmentMessageHandler implements BiConsumer<PacketContext, Hi
     @Override
     public void accept(PacketContext ctx, HitAttachmentMessage message) {
         ServerPlayerEntity player = (ServerPlayerEntity) ctx.getPlayer();
-        NetworkManager manager = ((NetworkManagerProvider) player.world).getNetworkManager();
+        NetworkManager manager = ((NetworkManagerProvider) player.getWorld()).getNetworkManager();
         Network network = manager.getNetworks().getById(message.networkId);
         if (network != null) {
             if (Validation.canReachAttachment(player, network, message.attachmentKey)) {

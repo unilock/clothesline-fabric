@@ -3,7 +3,6 @@ package com.jamieswhiteshirt.clothesline.api.client;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
-
 import org.jetbrains.annotations.Nullable;
 
 /**

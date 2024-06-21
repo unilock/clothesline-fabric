@@ -6,7 +6,6 @@ import com.jamieswhiteshirt.clothesline.api.Tree;
 import com.jamieswhiteshirt.clothesline.api.util.MutableSortedIntMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
