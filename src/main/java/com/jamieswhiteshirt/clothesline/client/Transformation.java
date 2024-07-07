@@ -1,6 +1,5 @@
 package com.jamieswhiteshirt.clothesline.client;
 
-import com.jamieswhiteshirt.clothesline.common.util.JomlUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.util.math.MatrixStack;
@@ -26,7 +25,7 @@ public final class Transformation {
     }
 
     public void apply(MatrixStack matrices) {
-        JomlUtil.matrix4fMultiply(matrices.peek().getPositionMatrix(), model);
-        JomlUtil.matrix3fMultiply(matrices.peek().getNormalMatrix(), normal);
+        matrices.peek().getPositionMatrix().mul(model);
+        matrices.peek().getNormalMatrix().mul(normal);
     }
 }

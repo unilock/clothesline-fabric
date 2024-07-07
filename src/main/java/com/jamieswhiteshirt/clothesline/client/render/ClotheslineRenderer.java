@@ -7,7 +7,6 @@ import com.jamieswhiteshirt.clothesline.client.LineProjection;
 import com.jamieswhiteshirt.clothesline.client.Transformation;
 import com.jamieswhiteshirt.clothesline.common.block.ClotheslineAnchorBlock;
 import com.jamieswhiteshirt.clothesline.common.block.ClotheslineBlocks;
-import com.jamieswhiteshirt.clothesline.common.util.JomlUtil;
 import com.jamieswhiteshirt.rtree3i.RTreeMap;
 import com.jamieswhiteshirt.rtree3i.Selection;
 import net.fabricmc.api.EnvType;
@@ -69,19 +68,19 @@ public final class ClotheslineRenderer {
             float uTo = (3.0F - side) / 4.0F;
 
             normal.set(nx, ny, 0.0F);
-            JomlUtil.vec3fTransformation(normal, matrices.getNormalMatrix());
+            normal.mul(matrices.getNormalMatrix());
 
             pos.set(x1, y1, 0.0F, 1.0F);
-            JomlUtil.vec4fTransformation(pos, matrices.getPositionMatrix());
+            pos.mul(matrices.getPositionMatrix());
             posNormal(vertices, pos, normal).texture(uFrom, vFrom).light(lightFrom).next();
             pos.set(x2, y2, 0.0F, 1.0F);
-            JomlUtil.vec4fTransformation(pos, matrices.getPositionMatrix());
+            pos.mul(matrices.getPositionMatrix());
             posNormal(vertices, pos, normal).texture(uTo, vFrom).light(lightFrom).next();
             pos.set(x2, y2, length, 1.0F);
-            JomlUtil.vec4fTransformation(pos, matrices.getPositionMatrix());
+            pos.mul(matrices.getPositionMatrix());
             posNormal(vertices, pos, normal).texture(uTo, vTo).light(lightTo).next();
             pos.set(x1, y1, length, 1.0F);
-            JomlUtil.vec4fTransformation(pos, matrices.getPositionMatrix());
+            pos.mul(matrices.getPositionMatrix());
             posNormal(vertices, pos, normal).texture(uFrom, vTo).light(lightTo).next();
         }
     }
@@ -166,8 +165,8 @@ public final class ClotheslineRenderer {
 
                     // Create world position of attachment for lighting calculation
                     wPos.set(0.0F, 0.0F, 0.0F, 1.0F);
-                    JomlUtil.vec4fTransformation(wPos, l2w.getModel());
-                    BlockPos pos = new BlockPos(MathHelper.floor(wPos.x), MathHelper.floor(wPos.y), MathHelper.floor(wPos.z));
+                    wPos.mul(l2w.getModel());
+                    BlockPos pos = BlockPos.ofFloored(wPos.x, wPos.y, wPos.z);
                     int light = WorldRenderer.getLightmapCoordinates(world, pos);
 
                     matrices.push();
@@ -269,7 +268,7 @@ public final class ClotheslineRenderer {
 
     private void renderHeldClothesline(MatrixStack matrices, VertexConsumerProvider vertexConsumers, BlockPos posA, Vec3d vecB, BlockRenderView world) {
         Vec3d vecA = Utility.midVec(posA);
-        BlockPos posB = new BlockPos((int) vecB.x, (int) vecB.y, (int) vecB.z);
+        BlockPos posB = BlockPos.ofFloored(vecB.x, vecB.y, vecB.z);
         int lightA = WorldRenderer.getLightmapCoordinates(world, posA);
         int lightB = WorldRenderer.getLightmapCoordinates(world, posB);
         float length = AttachmentUnit.UNITS_PER_BLOCK * (float) vecB.distanceTo(vecA);

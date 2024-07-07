@@ -28,15 +28,15 @@ public final class LineProjection {
 
     public Transformation getTransformation() {
         Matrix4f model = new Matrix4f(
-            (float) right.x, (float) up.x, (float) forward.x, (float) origin.x,
-            (float) right.y, (float) up.y, (float) forward.y, (float) origin.y,
-            (float) right.z, (float) up.z, (float) forward.z, (float) origin.z,
-            0.0F, 0.0F, 0.0F, 1.0F
+            (float) right.x, (float) right.y, (float) right.z, 0.0F,
+            (float) up.x, (float) up.y, (float) up.z, 0.0F,
+            (float) forward.x, (float) forward.y, (float) forward.z, 0.0F,
+            (float) origin.x, (float) origin.y, (float) origin.z, 1.0F
         );
         Matrix3f normal = new Matrix3f(
-            (float) right.x, (float) up.x, (float) forward.x,
-            (float) right.y, (float) up.y, (float) forward.y,
-            (float) right.z, (float) up.z, (float) forward.z
+            (float) right.x, (float) right.y, (float) right.z,
+            (float) up.x, (float) up.y, (float) up.z,
+            (float) forward.x, (float) forward.y, (float) forward.z
         );
 
         return new Transformation(model, normal);
@@ -80,15 +80,15 @@ public final class LineProjection {
         Vec3d upNormal = rightNormal.crossProduct(forward);
 
         Matrix4f model = new Matrix4f(
-            (float) rightNormal.x, (float) upNormal.x, (float) forward.x, (float) from.x,
-            (float) rightNormal.y, (float) upNormal.y, (float) forward.y, (float) from.y,
-            (float) rightNormal.z, (float) upNormal.z, (float) forward.z, (float) from.z,
-            0.0F, 0.0F, 0.0F, 1.0F
+            (float) rightNormal.x, (float) rightNormal.y, (float) rightNormal.z, 0.0F,
+            (float) upNormal.x, (float) upNormal.y, (float) upNormal.z, 0.0F,
+            (float) forward.x, (float) forward.y, (float) forward.z, 0.0F,
+            (float) from.x, (float) from.y, (float) from.z, 1.0F
         );
         Matrix3f normal = new Matrix3f(
-            (float) rightNormal.x, (float) upNormal.x, (float) forward.x,
-            (float) rightNormal.y, (float) upNormal.y, (float) forward.y,
-            (float) rightNormal.z, (float) upNormal.z, (float) forward.z
+            (float) rightNormal.x, (float) rightNormal.y, (float) rightNormal.z,
+            (float) upNormal.x, (float) upNormal.y, (float) upNormal.z,
+            (float) forward.x, (float) forward.y, (float) forward.z
         );
 
         return new Transformation(model, normal);

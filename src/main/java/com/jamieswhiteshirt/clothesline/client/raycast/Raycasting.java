@@ -5,7 +5,6 @@ import com.jamieswhiteshirt.clothesline.api.util.MutableSortedIntMap;
 import com.jamieswhiteshirt.clothesline.client.EdgeAttachmentTransformations;
 import com.jamieswhiteshirt.clothesline.client.LineProjection;
 import com.jamieswhiteshirt.clothesline.client.Transformation;
-import com.jamieswhiteshirt.clothesline.common.util.JomlUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.item.ItemStack;
@@ -101,15 +100,15 @@ public class Raycasting {
                 Matrix4f w2l = transformations.getW2LForAttachment(momentum, attachmentOffset, tickDelta);
 
                 lFrom.set((float) viewRay.from.x, (float) viewRay.from.y, (float) viewRay.from.z, 1.0F);
-                JomlUtil.vec4fTransformation(lFrom, w2l);
+                lFrom.mul(w2l);
                 lTo.set((float) viewRay.to.x, (float) viewRay.to.y, (float) viewRay.to.z, 1.0F);
-                JomlUtil.vec4fTransformation(lTo, w2l);
+                lTo.mul(w2l);
 
                 Optional<Vec3d> lResult = ATTACHMENT_BOX.raycast(new Vec3d(lFrom.x, lFrom.y, lFrom.z), new Vec3d(lTo.x, lTo.y, lTo.z));
                 if (lResult.isPresent()) {
                     Vec3d lHit = lResult.get();
                     wHit.set((float) lHit.x, (float) lHit.y, (float) lHit.z, 1.0F);
-                    JomlUtil.vec4fTransformation(wHit, l2w);
+                    wHit.mul(l2w);
                     double distanceSq = new Vec3d(wHit.x, wHit.y, wHit.z).squaredDistanceTo(viewRay.from);
                     if (distanceSq < maxDistanceSq) {
                         maxDistanceSq = distanceSq;

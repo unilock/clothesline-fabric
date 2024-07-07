@@ -3,7 +3,6 @@ package com.jamieswhiteshirt.clothesline.client;
 import com.jamieswhiteshirt.clothesline.api.AttachmentUnit;
 import com.jamieswhiteshirt.clothesline.api.NetworkEdge;
 import com.jamieswhiteshirt.clothesline.api.Path;
-import com.jamieswhiteshirt.clothesline.common.util.JomlUtil;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.util.math.BlockPos;
@@ -48,7 +47,6 @@ public final class EdgeAttachmentTransformations {
     private static float calculateGlobalAngleY(BlockPos delta) {
         return floorModAngle((float)Math.toDegrees(Math.atan2(delta.getZ(), delta.getX())));
     }
-
 
     private static float angleBetween(Path.Edge a, Path.Edge b) {
         float angleA = calculateGlobalAngleY(a.getDelta());
@@ -101,14 +99,13 @@ public final class EdgeAttachmentTransformations {
         Vec3d pos = projection.projectRUF(EDGE_X, EDGE_Y, relativeOffset / AttachmentUnit.UNITS_PER_BLOCK);
         float swingAngle = calculateSwingAngle(momentum, offset);
 
-        Quaternionf rotation = RotationAxis.POSITIVE_Y.rotationDegrees(-angleY);
-        JomlUtil.quaternionHamiltonProduct(rotation, JomlUtil.getDegreesQuaternion(JomlUtil.POSITIVE_X, swingAngle));
+        Quaternionf rotation = RotationAxis.POSITIVE_Y.rotationDegrees(-angleY).mul(RotationAxis.POSITIVE_X.rotationDegrees(swingAngle));
 
-        Matrix4f model = JomlUtil.matrix4fTranslate((float) pos.x, (float) pos.y, (float) pos.z);
-        JomlUtil.matrix4fMultiply(model, JomlUtil.matrix4fScale(0.5F, 0.5F, 0.5F));
-        JomlUtil.matrix4fMultiply(model, JomlUtil.quaternionToMatrix4f(rotation));
-        JomlUtil.matrix4fMultiply(model, JomlUtil.matrix4fTranslate(0.0F, -0.5F, 0.0F));
-        return model;
+        return new Matrix4f()
+            .translate((float) pos.x, (float) pos.y, (float) pos.z)
+            .scale(0.5F)
+            .rotate(rotation)
+            .translate(0.0F, -0.5F, 0.0F);
     }
 
     public Matrix4f getW2LForAttachment(float momentum, float offset, float tickDelta) {
@@ -116,14 +113,13 @@ public final class EdgeAttachmentTransformations {
         Vec3d pos = projection.projectRUF(EDGE_X, EDGE_Y, relativeOffset / AttachmentUnit.UNITS_PER_BLOCK);
         float swingAngle = calculateSwingAngle(momentum, offset);
 
-        Quaternionf rotation = RotationAxis.POSITIVE_X.rotationDegrees(-swingAngle);
-        JomlUtil.quaternionHamiltonProduct(rotation, JomlUtil.getDegreesQuaternion(JomlUtil.POSITIVE_Y, angleY));
+        Quaternionf rotation = RotationAxis.POSITIVE_X.rotationDegrees(-swingAngle).mul(RotationAxis.POSITIVE_Y.rotationDegrees(angleY));
 
-        Matrix4f model = JomlUtil.matrix4fTranslate(0.0F, 0.5F, 0.0F);
-        JomlUtil.matrix4fMultiply(model, JomlUtil.quaternionToMatrix4f(rotation));
-        JomlUtil.matrix4fMultiply(model, JomlUtil.matrix4fScale(2.0F, 2.0F, 2.0F));
-        JomlUtil.matrix4fMultiply(model, JomlUtil.matrix4fTranslate((float) -pos.x, (float) -pos.y, (float) -pos.z));
-        return model;
+        return new Matrix4f()
+            .translate(0.0F, 0.5F, 0.0F)
+            .rotate(rotation)
+            .scale(2.0F)
+            .translate((float) -pos.x, (float) -pos.y, (float) -pos.z);
     }
 
     public Transformation getL2WForAttachment(float momentum, float offset) {
@@ -131,14 +127,14 @@ public final class EdgeAttachmentTransformations {
         Vec3d pos = projection.projectRUF(EDGE_X, EDGE_Y, relativeOffset / AttachmentUnit.UNITS_PER_BLOCK);
         float swingAngle = calculateSwingAngle(momentum, offset);
 
-        Quaternionf rotation = RotationAxis.POSITIVE_Y.rotationDegrees(-angleY);
-        JomlUtil.quaternionHamiltonProduct(rotation, JomlUtil.getDegreesQuaternion(JomlUtil.POSITIVE_X, swingAngle));
+        Quaternionf rotation = RotationAxis.POSITIVE_Y.rotationDegrees(-angleY).mul(RotationAxis.POSITIVE_X.rotationDegrees(swingAngle));
 
-        Matrix4f model = JomlUtil.matrix4fTranslate((float) pos.x, (float) pos.y, (float) pos.z);
-        JomlUtil.matrix4fMultiply(model, JomlUtil.matrix4fScale(0.5F, 0.5F, 0.5F));
-        JomlUtil.matrix4fMultiply(model, JomlUtil.quaternionToMatrix4f(rotation));
-        JomlUtil.matrix4fMultiply(model, JomlUtil.matrix4fTranslate(0.0F, -0.5F, 0.0F));
-        Matrix3f normal = JomlUtil.quaternionToMatrix3f(rotation);
+        Matrix4f model = new Matrix4f()
+            .translate((float) pos.x, (float) pos.y, (float) pos.z)
+            .scale(0.5F)
+            .rotate(rotation)
+            .translate(0.0F, -0.5F, 0.0F);
+        Matrix3f normal = new Matrix3f().set(rotation);
         return new Transformation(model, normal);
     }
 
@@ -147,14 +143,14 @@ public final class EdgeAttachmentTransformations {
         Vec3d pos = projection.projectRUF(EDGE_X, EDGE_Y, relativeOffset / AttachmentUnit.UNITS_PER_BLOCK);
         float swingAngle = calculateSwingAngle(momentum, offset);
 
-        Quaternionf rotation = RotationAxis.POSITIVE_X.rotationDegrees(-swingAngle);
-        JomlUtil.quaternionHamiltonProduct(rotation, JomlUtil.getDegreesQuaternion(JomlUtil.POSITIVE_Y, angleY));
+        Quaternionf rotation = RotationAxis.POSITIVE_X.rotationDegrees(-swingAngle).mul(RotationAxis.POSITIVE_Y.rotationDegrees(angleY));
 
-        Matrix4f model = JomlUtil.matrix4fTranslate(0.0F, 0.5F, 0.0F);
-        JomlUtil.matrix4fMultiply(model, JomlUtil.quaternionToMatrix4f(rotation));
-        JomlUtil.matrix4fMultiply(model, JomlUtil.matrix4fScale(2.0F, 2.0F, 2.0F));
-        JomlUtil.matrix4fMultiply(model, JomlUtil.matrix4fTranslate((float) -pos.x, (float) -pos.y, (float) -pos.z));
-        Matrix3f normal = JomlUtil.quaternionToMatrix3f(rotation);
+        Matrix4f model = new Matrix4f()
+            .translate(0.0F, 0.5F, 0.0F)
+            .rotate(rotation)
+            .scale(2.0F)
+            .translate((float) -pos.x, (float) -pos.y, (float) -pos.z);
+        Matrix3f normal = new Matrix3f().set(rotation);
         return new Transformation(model, normal);
     }
 }
