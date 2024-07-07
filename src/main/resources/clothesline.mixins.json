@@ -19,8 +19,6 @@
     "client.render.GameRendererMixin",
     "client.render.WorldRendererMixin",
     "client.render.entity.PlayerEntityRendererMixin",
-    "client.util.math.Matrix3fMixin",
-    "client.util.math.Matrix4fMixin",
     "client.world.ClientWorldMixin"
   ],
   "injectors": {

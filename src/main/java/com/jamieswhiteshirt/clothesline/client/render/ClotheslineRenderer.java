@@ -23,10 +23,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.world.BlockRenderView;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
@@ -109,10 +106,10 @@ public final class ClotheslineRenderer {
             matrices.push();
             matrices.translate(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
             if (state.get(ClotheslineAnchorBlock.FACE) == WallMountLocation.CEILING) {
-                matrices.multiply(JomlUtil.getDegreesQuaternion(JomlUtil.POSITIVE_X, 180.0F));
+                matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(180.0F));
                 crankRotation = -crankRotation;
             }
-            matrices.multiply(JomlUtil.getDegreesQuaternion(JomlUtil.POSITIVE_Y, crankRotation));
+            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(crankRotation));
 
             matrices.push();
             matrices.scale(2.0F, 2.0F, 2.0F);
@@ -170,7 +167,7 @@ public final class ClotheslineRenderer {
                     // Create world position of attachment for lighting calculation
                     wPos.set(0.0F, 0.0F, 0.0F, 1.0F);
                     JomlUtil.vec4fTransformation(wPos, l2w.getModel());
-                    BlockPos pos = new BlockPos((int) wPos.x, (int) wPos.y, (int) wPos.z);
+                    BlockPos pos = new BlockPos(MathHelper.floor(wPos.x), MathHelper.floor(wPos.y), MathHelper.floor(wPos.z));
                     int light = WorldRenderer.getLightmapCoordinates(world, pos);
 
                     matrices.push();

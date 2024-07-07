@@ -27,15 +27,13 @@ public final class LineProjection {
     }
 
     public Transformation getTransformation() {
-        Matrix4f model = new Matrix4f();
-        ((Matrix4fExtension) (Object) model).load(
+        Matrix4f model = new Matrix4f(
             (float) right.x, (float) up.x, (float) forward.x, (float) origin.x,
             (float) right.y, (float) up.y, (float) forward.y, (float) origin.y,
             (float) right.z, (float) up.z, (float) forward.z, (float) origin.z,
             0.0F, 0.0F, 0.0F, 1.0F
         );
-        Matrix3f normal = new Matrix3f();
-        ((Matrix3fExtension) (Object) normal).load(
+        Matrix3f normal = new Matrix3f(
             (float) right.x, (float) up.x, (float) forward.x,
             (float) right.y, (float) up.y, (float) forward.y,
             (float) right.z, (float) up.z, (float) forward.z
@@ -81,15 +79,13 @@ public final class LineProjection {
         // The normal vector facing up from the forward normal (on the right normal plane)
         Vec3d upNormal = rightNormal.crossProduct(forward);
 
-        Matrix4f model = new Matrix4f();
-        ((Matrix4fExtension) (Object) model).load(
+        Matrix4f model = new Matrix4f(
             (float) rightNormal.x, (float) upNormal.x, (float) forward.x, (float) from.x,
             (float) rightNormal.y, (float) upNormal.y, (float) forward.y, (float) from.y,
             (float) rightNormal.z, (float) upNormal.z, (float) forward.z, (float) from.z,
             0.0F, 0.0F, 0.0F, 1.0F
         );
-        Matrix3f normal = new Matrix3f();
-        ((Matrix3fExtension) (Object) normal).load(
+        Matrix3f normal = new Matrix3f(
             (float) rightNormal.x, (float) upNormal.x, (float) forward.x,
             (float) rightNormal.y, (float) upNormal.y, (float) forward.y,
             (float) rightNormal.z, (float) upNormal.z, (float) forward.z
